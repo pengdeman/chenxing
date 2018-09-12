@@ -1,38 +1,50 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
+  <!-- 基本信息 -->
+  <description>SpringBoot 多模块项目（晨星）</description>
   <modelVersion>4.0.0</modelVersion>
-
+  <name>chenxing</name>
+  <packaging>pom</packaging>
+  <url>http://maven.apache.org</url>
+  
+  <!-- 项目说明：这里作为聚合工程的父工程 -->
+  <groupId>com.cx</groupId>
+  <artifactId>chenxing</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+ 
+  <!-- 继承说明：这里继承SpringBoot提供的父工程 --> 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>1.5.9.RELEASE</version>
   </parent>
 
-  <groupId>com.cx</groupId>
-  <artifactId>chenxing</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <!-- 模块说明：这里声明多个子模块 -->
+  <modules>
+	<module>chenxing-web</module>
+	<module>chenxing-common</module>
+  </modules>
 
-  <name>chenxing</name>
-  <url>http://maven.apache.org</url>
 
+  <!-- 版本说明：这里统一管理依赖的版本号 -->
+  <dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.cx</groupId>
+				<artifactId>chenxing-web</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.cx</groupId>
+				<artifactId>chenxing-common</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+		</dependencies>
+  </dependencyManagement>
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
-  <dependencies>
-  
-    <!-- boot.starter.web -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-  
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
 </project>

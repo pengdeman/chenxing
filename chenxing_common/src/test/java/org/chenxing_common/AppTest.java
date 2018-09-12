@@ -1,4 +1,4 @@
-package com.cx.chenxing;
+package org.chenxing_common;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
