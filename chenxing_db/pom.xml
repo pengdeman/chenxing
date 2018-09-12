@@ -3,27 +3,23 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   
-  <!-- 继承本项目的父工程 -->
   <parent>
     <groupId>com.cx</groupId>
     <artifactId>chenxing</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  
-  <!-- 基本信息 -->
-  <artifactId>chenxing_web</artifactId>
-  <name>web模块</name>
+
+  <artifactId>chenxing_db</artifactId>
+  <name>数据模块</name>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  
-  <dependencies>  
-	 <dependency>
-		<groupId>com.cx</groupId>
-		<artifactId>chenxing_service</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</dependency>		
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
-  
 </project>

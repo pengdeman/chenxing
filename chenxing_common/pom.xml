@@ -10,7 +10,7 @@
   </parent>
   
   <artifactId>chenxing_common</artifactId>
-  <name>chenxing_common</name>
+  <name>共用模块</name>
   <url>http://maven.apache.org</url>
   
   <properties>
