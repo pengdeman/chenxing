@@ -28,8 +28,12 @@
 	<module>chenxing_model</module>
 	<module>chenxing-web</module>
   </modules>
+	
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
-<dependencies>
+   <dependencies>
  
     <!-- 自动生成GET SET等方法 -->
     <dependency>
@@ -38,6 +42,12 @@
       <scope>provided</scope>
     </dependency>
  
+    <!-- actuator是监控系统健康情况的工具。 -->
+    <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-actuator</artifactId>
+	</dependency>
+	
     <!-- Spring Boot 启动 依赖 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -79,8 +89,4 @@
 		</dependencies>
   </dependencyManagement>
   
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
 </project>
