@@ -1,4 +1,4 @@
-package User.impl;
+package com.cx.chenxing.user.impl;
 
 public class UserServiceImpl {
 

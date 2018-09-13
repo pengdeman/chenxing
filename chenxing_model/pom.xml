@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>chenxing_model</artifactId>
-  <name></name>
+  <name>容器模块</name>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

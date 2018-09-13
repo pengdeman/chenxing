@@ -22,11 +22,11 @@
 
   <!-- 模块说明：这里声明多个子模块 -->
   <modules>
-	<module>chenxing-common</module>
+	<module>chenxing_common</module>
 	<module>chenxing_db</module>
 	<module>chenxing_service</module>
 	<module>chenxing_model</module>
-	<module>chenxing-web</module>
+	<module>chenxing_web</module>
   </modules>
 	
   <properties>
