@@ -1,19 +1,18 @@
 package com.cx.chenxing.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 //@Controller+@ResponseBody相当于@RestController
-@Controller
-@RequestMapping(value="/")
+@RestController
+@RequestMapping(value="/user")
 public class UserController {
 	
 	@ResponseBody
-	@RequestMapping(value="/")
+	@RequestMapping(value="/index")
 	public String index() {
-		System.out.println("进入方法！！！！！");
-		return "Hello World";
+		return "Hello User";
 	}
 
 }

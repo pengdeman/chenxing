@@ -2,3 +2,13 @@ server:
   port: 8001
 application:
   name: chenxing
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://127.0.0.1:3306/chenyun01
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.ocean.pojo
