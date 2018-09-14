@@ -10,4 +10,5 @@
   <select id="findAllUser" resultType="com.cx.chenxing.user.entity.User">
     select * from user
   </select>
+  
 </mapper>

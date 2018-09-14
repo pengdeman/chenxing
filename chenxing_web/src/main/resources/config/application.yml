@@ -10,5 +10,5 @@ spring:
     password: pdm920521
     driver-class-name: com.mysql.jdbc.Driver
 mybatis:
-  mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.cx.chenxing
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: com.cx.chenxing.*.dao
