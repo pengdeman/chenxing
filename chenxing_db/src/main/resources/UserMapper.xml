@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cx.chenxing.user.dao.UserDao">
+  <resultMap id="BaseResultMap" type="com.cx.chenxing.user.entity.User">
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+  </resultMap>
+  
+  <!--我自己加的方法-->
+  <select id="findAllUser" resultType="com.cx.chenxing.user.entity.User">
+    select * from user
+  </select>
+</mapper>

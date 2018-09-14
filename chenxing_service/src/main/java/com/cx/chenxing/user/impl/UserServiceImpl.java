@@ -1,15 +1,15 @@
 package com.cx.chenxing.user.impl;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.cx.chenxing.user.IUserService;
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import com.cx.chenxing.user.UserService;
 import com.cx.chenxing.user.manager.UserManager;
 
-public class UserServiceImpl implements IUserService{
+@Service
+public class UserServiceImpl implements UserService{
 
-	@Autowired
+	@Resource
 	private UserManager userManager;
 	
 	@Override

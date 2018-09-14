@@ -2,6 +2,6 @@ package com.cx.chenxing.user;
 
 import java.util.List;
 
-public interface IUserService {
+public interface UserService {
 	List findAllUser();
 }
