@@ -18,8 +18,9 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value="/index")
 	public String index() {
-		List list =  userService.findAllUser();
-	    return list.toString();
+		//List list =  userService.findAllUser();
+	    //return list.toString();
+		return "/frontpages/index";
 	}
 
 }

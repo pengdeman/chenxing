@@ -35,7 +35,15 @@
 		<groupId>com.cx</groupId>
 		<artifactId>chenxing_service</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-	</dependency>		
+	 </dependency>	
+	 
+	 <!--Jasper引擎解析JSP-->
+	 <dependency>
+		<groupId>org.apache.tomcat.embed</groupId>
+		<artifactId>tomcat-embed-jasper</artifactId>
+	    <scope>provided</scope>
+	 </dependency>
+		
   </dependencies>
   
   <build>

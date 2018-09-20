@@ -9,6 +9,10 @@ spring:
     username: root
     password: pdm920521
     driver-class-name: com.mysql.jdbc.Driver
+  mvc:
+    view:
+      prefix:  /WEB-INF/pages
+      suffix:  .jsp
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
   type-aliases-package: com.cx.chenxing.*.dao
