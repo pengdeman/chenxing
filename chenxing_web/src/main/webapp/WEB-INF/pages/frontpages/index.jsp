@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
@@ -38,14 +38,19 @@
       @media screen and (max-width:500px){
         .hideline { display:none; }
       }
+      .cxtext {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space:nowrap;
+      }
     </style>
   </head>
   <body>
-  <div class="jumbotron text-center" style="margin-bottom:0; background-image: url('xingchen.jpg');">
-    <h1 style="color: white">辰星</h1>
-    <p style="color: white; font-size: small">那灿烂银河中的每一颗辰星，在浩瀚的夜空中，是如此的渺小，但当流淌过我的眼帘，却深深地耀住了我的心房。虽是渺小，但却努力地闪出如宝石般的光芒来装点着夜空、依偎着银河、告别着平凡。</p>
+  <div class="jumbotron text-center" style="margin-bottom:0; background-image: url('xingchen.jpg');background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
+    <h5 style="color: white">从童年起，我便独自一人</h5>
+    <h5 style="color: white">照顾着</h5>
+    <h5 style="color: white">历代的星辰</h5>
   </div>
-
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -60,7 +65,6 @@
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">主页</a></li>
           <li><a href="#">足迹</a></li>
-          <li><a href="#">相册</a></li>
           <li><a href="#">留言板</a></li>
           <li><a href="#">个人中心</a></li>
         </ul>
@@ -109,13 +113,88 @@
       <div class="col-sm-8">
         <h2></h2>
         <div class="fakeimg" style="background-image: url('bj.jpg')"></div>
-        <p>一些文本..</p>
-        <p>菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！</p>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="cxtext">
+              北京故宫是中国明清两代的皇家宫殿，旧称为紫禁城，位于北京中轴线的中心，
+              是中国古代宫廷建筑之精华。北京故宫以三大殿为中心，占地面积72万平方米，
+              建筑面积约15万平方米，有大小宫殿七十多座，房屋九千余间。是世界上现存规模最大、
+              保存最为完整的木质结构古建筑之一。北京故宫于明成祖永乐四年（1406年）开始建设，
+              以南京故宫为蓝本营建，到永乐十八年（1420年）建成。它是一座长方形城池，
+              南北长961米，东西宽753米，四面围有高10米的城墙，城外有宽52米的护城河。
+              紫禁城内的建筑分为外朝和内廷两部分。外朝的中心为太和殿、中和殿、保和殿，
+              统称三大殿，是国家举行大典礼的地方。内廷的中心是乾清宫、交泰殿、坤宁宫，
+              统称后三宫，是皇帝和皇后居住的正宫。
+            </div>
+            <br>
+            <div class="btn-group" style="margin-left: -15px;">
+              <button type="button" class="btn btn-default" style="border:none">
+                <span class="glyphicon glyphicon-map-marker" style="font-size: 10px;">北京市朝阳区新华金融大厦</span>
+              </button>
+            </div>
+            <br>
+            <HR width="80%" color=#987cb9 SIZE=10 />
+            <div class="btn-group" style="margin-left: -15px;">
+              <button type="button" class="btn btn-default" style="border:none">
+                <span class="glyphicon glyphicon-eye-open">9822</span>
+              </button>
+            </div>
+            <div class="btn-group" style="float: right; margin-right: -10px;">
+              <button type="button" class="btn btn-default" style="border:none">
+                <span class="glyphicon glyphicon-share-alt">155</span>
+              </button>
+              <button type="button" class="btn btn-default" style="border:none">
+                <span class="glyphicon glyphicon-edit">25</span>
+              </button>
+              <button type="button" class="btn btn-default" style="border:none">
+                <span class="glyphicon glyphicon-heart-empty">15</span>
+                <!-- <span class="glyphicon glyphicon-heart"></span> 已赞 -->
+              </button>
+            </div>
+          </div>
+        </div>
         <br>
         <h2></h2>
         <div class="fakeimg" style="background-image: url('gz.jpg')"></div>
-        <p>一些文本..</p>
-        <p>菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！</p>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="cxtext">
+              广州塔（英语：Canton Tower）又称广州新电视塔，昵称小蛮腰。位于广州市海珠区（
+              艺洲岛）赤岗塔附近，距离珠江南岸125米，与珠江新城、花城广场、海心沙岛隔江相望。
+              广州塔塔身主体高454米，天线桅杆高146米，总高度600米。是中国第一高塔，
+              世界第二高塔，仅次于东京晴空塔，是国家AAAA级旅游景区。广州塔塔身168米–334.4米
+              处设有“蜘蛛侠栈道”，是世界最高最长的空中漫步云梯。塔身422.8米处设有旋转餐厅，
+              是世界最高的旋转餐厅。塔身顶部450~454米处设有摩天轮，是世界最高摩天轮。
+              天线桅杆455米~485米处设有“极速云霄”速降游乐项目，是世界最高的垂直速降游乐项目。
+              天线桅杆488米处设有户外摄影观景平台，是世界最高的户外观景平台，超越了迪拜哈利法塔的442米室外
+              观景平台，以及加拿大国家电视塔447米的“天空之盖”的高度
+            </div>
+            <br>
+            <div class="btn-group" style="margin-left: -15px;">
+              <button type="button" class="btn btn-default" style="border:none">
+                <span class="glyphicon glyphicon-map-marker" style="font-size: 10px;">黑龙江省桦南县林业大院3号楼</span>
+              </button>
+            </div>
+            <br>
+            <HR width="80%" color=#987cb9 SIZE=10 />
+            <div class="btn-group" style="margin-left: -15px;">
+              <button type="button" class="btn btn-default" style="border:none">
+                <span class="glyphicon glyphicon-eye-open">4222</span>
+              </button>
+            </div>
+            <div class="btn-group" style="float: right;">
+              <button type="button" class="btn btn-default" style="border:none">
+                <span class="glyphicon glyphicon-share-alt">92</span>
+              </button>
+              <button type="button" class="btn btn-default" style="border:none">
+                <span class="glyphicon glyphicon-edit">65</span>
+              </button>
+              <button type="button" class="btn btn-default" style="border:none">
+                <span class="glyphicon glyphicon-heart-empty">23</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
