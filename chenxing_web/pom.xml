@@ -35,9 +35,15 @@
 		<groupId>com.cx</groupId>
 		<artifactId>chenxing_service</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-	 </dependency>	
-	 
-	 <!--Jasper引擎解析JSP-->
+	 </dependency>
+
+	  <!--jsp页面使用jstl标签-->
+	  <dependency>
+		  <groupId>javax.servlet</groupId>
+		  <artifactId>jstl</artifactId>
+	  </dependency>
+
+	  <!--Jasper引擎解析JSP jasper是将jsp转化为jvm 能识别的class.java 文件-->
 	 <dependency>
 		<groupId>org.apache.tomcat.embed</groupId>
 		<artifactId>tomcat-embed-jasper</artifactId>
