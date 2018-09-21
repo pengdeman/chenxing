@@ -214,7 +214,7 @@
   <div class="row footer-bottom" style="background-color: #aaaaaa;">
     <br>
     <ul class="list-inline text-center">
-      <li style="font-size: 10px;">Copyright &copy;2018. n 辰星公司 Software All Rights Reserved.</li>
+      <li>Copyright &copy;2018. n 辰星公司 Software All Rights Reserved.</li>
     </ul>
     <br>
   </div>
