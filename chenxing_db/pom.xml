@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>chenxing_db</artifactId>
-  <name>数据模块</name>
+  <name>chenxing_db</name>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,5 +40,16 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>com.cx</groupId>
+          <artifactId>chenxing_model</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>com.cx</groupId>
+          <artifactId>chenxing_common</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
+      </dependency>
   </dependencies>
 </project>

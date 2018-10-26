@@ -9,6 +9,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8">
+    <base href="<%=basePath%>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="<%=basePath%>">
@@ -38,10 +39,26 @@
       @media screen and (max-width:500px){
         .hideline { display:none; }
       }
+      .cxguanzhu {
+        height: 30px;
+        float: right;
+      }
+      .cxtouxiang {
+        width: 60px;
+        margin-left: -7px;
+        border-radius: 50%;
+      }
+      .cxtime {
+        font-size: 12px;
+        color: #aaaaaa;
+      }
       .cxtext {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space:nowrap;
+      }
+      .bodernone {
+        border:none;
       }
     </style>
   </head>
@@ -69,8 +86,8 @@
           <li><a href="#">个人中心</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#registerModal"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
         </ul>
       </div>
     </div>
@@ -87,19 +104,20 @@
             <tr>
               <td colspan="4" style="text-align: center;">
                 <span class="glyphicon glyphicon-user"></span>
-                <strong>彭英峻</strong>
+                <!-- ♂表示男性，♀表示女性 -->
+                <strong>彭英峻</strong>&nbsp;&nbsp;<strong>♂</strong>
               </td>
             </tr>
             <tr>
-              <td><strong>关注:</strong></td>
+              <td style=" white-space: nowrap;"><strong>关注:</strong></td>
               <td>232</td>
-              <td><strong>粉丝:</strong></td>
+              <td style=" white-space: nowrap;"><strong>粉丝:</strong></td>
               <td>428</td>
             </tr>
             <tr>
-              <td><strong>访客:</strong></td>
+              <td style=" white-space: nowrap;"><strong>访客:</strong></td>
               <td>192033</td>
-              <td><strong>坐标:</strong></td>
+              <td style=" white-space: nowrap;"><strong>坐标:</strong></td>
               <td>北京</td>
             </tr>
             <tr>
@@ -127,6 +145,20 @@
         <div class="fakeimg" style="background-image: url('bj.jpg')"></div>
         <div class="panel panel-default">
           <div class="panel-body">
+            <table class="table" frame="void">
+              <tr style="height: 20px;">
+                <td rowspan="2" width="55px;">
+                  <img src="touxiang.jpg" class="cxtouxiang">
+                </td>
+                <td>
+                  <label style="margin-top: 5px;">彭英峻</label>&nbsp;&nbsp;<label title="登录365天，皇冠等级">👑</label>
+                  <button type="button" class="btn btn-default cxguanzhu">➕关注</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="cxtime">2018-09-25 09:23:45</td>
+              </tr>
+            </table>
             <div class="cxtext">
               北京故宫是中国明清两代的皇家宫殿，旧称为紫禁城，位于北京中轴线的中心，
               是中国古代宫廷建筑之精华。北京故宫以三大殿为中心，占地面积72万平方米，
@@ -140,25 +172,25 @@
             </div>
             <br>
             <div class="btn-group" style="margin-left: -15px;">
-              <button type="button" class="btn btn-default" style="border:none">
+              <button type="button" class="btn btn-default bodernone">
                 <span class="glyphicon glyphicon-map-marker" style="font-size: 10px;">北京市朝阳区新华金融大厦</span>
               </button>
             </div>
             <br>
-            <HR width="80%" color=#987cb9 SIZE=10 />
+            <HR width="100%" color=#987cb9 SIZE=10 />
             <div class="btn-group" style="margin-left: -15px;">
-              <button type="button" class="btn btn-default" style="border:none">
+              <button type="button" class="btn btn-default bodernone">
                 <span class="glyphicon glyphicon-eye-open"> 822</span>
               </button>
             </div>
             <div class="btn-group" style="float: right; margin-right: -10px;">
-              <button type="button" class="btn btn-default" style="border:none">
+              <button type="button" class="btn btn-default bodernone">
                 <span class="glyphicon glyphicon-share-alt"> 155</span>
               </button>
-              <button type="button" class="btn btn-default" style="border:none">
+              <button type="button" class="btn btn-default bodernone">
                 <span class="glyphicon glyphicon-edit"> 25</span>
               </button>
-              <button type="button" class="btn btn-default" style="border:none">
+              <button type="button" class="btn btn-default bodernone">
                 <span class="glyphicon glyphicon-heart-empty"> 15</span>
                 <!-- <span class="glyphicon glyphicon-heart"></span> 已赞 -->
               </button>
@@ -214,9 +246,131 @@
   <div class="row footer-bottom" style="background-color: #aaaaaa;">
     <br>
     <ul class="list-inline text-center">
-      <li style="font-size: 10px;">Copyright &copy;2018. n 辰星公司 Software All Rights Reserved.</li>
+      <li style="font-size: 10px;">Copyright &copy;2018. n 辰星集团 Software All Rights Reserved.</li>
     </ul>
     <br>
   </div>
+
+  <!-- 注册模态框（Modal） -->
+  <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-image: url('xingchen.jpg');background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
+          <button type="button" class="close" data-dismiss="modal"
+                  aria-hidden="true">×
+          </button>
+          <h1 class="text-center" id="registerModalLabel" style="color: white">
+            注册
+          </h1>
+        </div>
+        <div class="modal-body">
+          <form class="form-group" action="<%=basePath%>locationreg" id="regist-form_id" method="post">
+            <div class="form-group">
+              <label>昵称</label>
+              <input class="form-control" type="text" name="signup_name" placeholder="给自己起一个帅气的名字吧">
+            </div>
+            <div class="form-group">
+              <label>密码</label>
+              <input class="form-control" type="password" name="signup_password" placeholder="至少6位字母或数字">
+            </div>
+            <div class="form-group">
+              <label>邮箱</label>
+              <input class="form-control" type="email" name="signup_email" placeholder="该邮箱将作为登录账号使用">
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary" type="submit" onclick="registsubform()">提交</button>
+              <button class="btn btn-danger" data-dismiss="modal">取消</button>
+            </div>
+            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#loginModal">已有账号？点我登录</a>
+          </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+  <!-- 登录模态框（Modal） -->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-image: url('xingchen.jpg');background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
+          <button type="button" class="close" data-dismiss="modal"
+                  aria-hidden="true">×
+          </button>
+          <h1 class="text-center" id="loginModalLabel" style="color: white">
+            登录
+          </h1>
+        </div>
+        <div class="modal-body">
+          <form class="form-group" action="<%=basePath%>locationsign" id="signin-form_id" method="post">
+            <div class="form-group">
+              <label>用户名</label>
+              <input class="form-control" type="text" name="username" placeholder="请输入用户名">
+            </div>
+            <div class="form-group">
+              <label>密码</label>
+              <input class="form-control" type="password" name="password" placeholder="请输入密码">
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary" type="submit" onclick="signinsubform()">登录</button>
+              <button class="btn btn-danger" data-dismiss="modal">取消</button>
+            </div>
+            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#registerModal">还没有账号？点我注册</a>
+          </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <script type="text/javascript">
+      /**
+       * 获取后台message信息
+       */
+      $(function() {
+          messge = '${messge}';
+          if(messge != ''){
+              alert(messge);
+          }
+      });
+
+      /**
+       * 登录
+       */
+      function signinsubform() {
+          if ($("input[name='username']").val().length == 0) {
+              alert("请输入用户名。");
+              return;
+          }
+          if ($("input[name='password']").val().length == 0) {
+              alert("请输入密码。");
+              return;
+          }
+          $("#signin-form_id").submit();
+      }
+
+      /**
+       * 注册
+       */
+      function registsubform() {
+          if ($("input[name='signup_name']").val().length == 0) {
+              alert("请输入昵称。");
+              return;
+          }
+          if ($("input[name='signup_email']").val().length == 0) {
+              alert("请输入Email。");
+              return;
+          }
+          if ($("input[name='signup_password']").val().length == 0) {
+              alert("请输入密码。");
+              return;
+          }
+          layer.open({
+              type: 2
+              ,content: '提交中...'
+              ,time: 5
+          });
+          $("#signup-form_id").submit();
+      }
+  </script>
   </body>
 </html>

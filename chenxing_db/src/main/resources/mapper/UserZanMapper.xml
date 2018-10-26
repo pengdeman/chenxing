@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cx.chenxing.userzan.dao.UserZanDao">
+        <resultMap id="BaseResultMap" type="com.cx.chenxing.userzan.entity.UserZan">
+                <result property="id" column="id"/>
+                <result property="zanUid" column="zan_uid"/>
+                <result property="zanTime" column="zan_time"/>
+                <result property="zanArticleId" column="zan_article_id"/>
+                <result property="zanArticleRid" column="zan_article_rid"/>
+                <result property="bzanUid" column="bzan_uid"/>
+        </resultMap>
+        <sql id="Base_Column_List">
+            <![CDATA[
+                id,zan_uid,zan_time,zan_article_id,zan_article_rid,bzan_uid
+            ]]>
+        </sql>
+         <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+                select
+                <include refid="Base_Column_List"/>
+                from user_zan
+                where
+                        id = #{id} 
+        </select>
+        <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+            delete from user_zan
+            where 
+            id = #{id} 
+        </delete>
+        <insert id="insert" parameterType="com.cx.chenxing.userzan.entity.UserZan"
+                useGeneratedKeys="true" keyProperty="id">
+                <![CDATA[
+                INSERT INTO user_zan (
+                    id ,
+                    zan_uid ,
+                    zan_time ,
+                    zan_article_id ,
+                    zan_article_rid ,
+                    bzan_uid 
+                ) VALUES (
+                    #{id} ,
+                    #{zanUid} ,
+                    #{zanTime} ,
+                    #{zanArticleId} ,
+                    #{zanArticleRid} ,
+                    #{bzanUid} 
+                )
+                 ]]>
+        </insert>
+        <insert id="insertSelective" parameterType="com.cx.chenxing.userzan.entity.UserZan"
+                useGeneratedKeys="true" keyProperty="id">
+                insert into  user_zan
+                <trim prefix="(" suffix=")" suffixOverrides=",">
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(id)">
+                             id ,
+                         </if>
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanUid)">
+                             zan_uid ,
+                         </if>
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanTime)">
+                             zan_time ,
+                         </if>
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanArticleId)">
+                             zan_article_id ,
+                         </if>
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanArticleRid)">
+                             zan_article_rid ,
+                         </if>
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(bzanUid)">
+                             bzan_uid 
+                         </if>
+                 </trim>
+                <trim prefix="values (" suffix=")" suffixOverrides=",">
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(id)">
+                            #{id} ,
+                        </if>
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanUid)">
+                            #{zanUid} ,
+                        </if>
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanTime)">
+                            #{zanTime} ,
+                        </if>
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanArticleId)">
+                            #{zanArticleId} ,
+                        </if>
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanArticleRid)">
+                            #{zanArticleRid} ,
+                        </if>
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(bzanUid)">
+                            #{bzanUid} 
+                        </if>
+                </trim>
+        </insert>
+        <update id="updateByPrimaryKeySelective" parameterType="com.cx.chenxing.userzan.entity.UserZan">
+                update  user_zan
+            <set>
+                     <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(id)">
+                         id = #{id},
+                     </if>
+                     <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanUid)">
+                         zan_uid = #{zanUid},
+                     </if>
+                     <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanTime)">
+                         zan_time = #{zanTime},
+                     </if>
+                     <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanArticleId)">
+                         zan_article_id = #{zanArticleId},
+                     </if>
+                     <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanArticleRid)">
+                         zan_article_rid = #{zanArticleRid},
+                     </if>
+                     <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(bzanUid)">
+                         bzan_uid = #{bzanUid}
+                     </if>
+            </set>
+             where
+                    id = #{id} 
+        </update>
+        <update id="updateByPrimaryKey" parameterType="com.cx.chenxing.userzan.entity.UserZan">
+            update  user_zan
+             <set>
+                 id = #{id},
+                 zan_uid = #{zanUid},
+                 zan_time = #{zanTime},
+                 zan_article_id = #{zanArticleId},
+                 zan_article_rid = #{zanArticleRid},
+                 bzan_uid = #{bzanUid}
+            </set>
+                where
+                        id = #{id} 
+        </update>
+
+
+        <sql id="queryWhere">
+            <where>
+                <trim suffixOverrides="and">
+                        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(id)">
+                            id = #{id}  and 
+                        </if>
+                        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanUid)">
+                            zan_uid = #{zanUid}  and 
+                        </if>
+                        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanTime)">
+                            zan_time = #{zanTime}  and 
+                        </if>
+                        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanArticleId)">
+                            zan_article_id = #{zanArticleId}  and 
+                        </if>
+                        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(zanArticleRid)">
+                            zan_article_rid = #{zanArticleRid}  and 
+                        </if>
+                        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(bzanUid)">
+                            bzan_uid = #{bzanUid} 
+                        </if>
+                </trim>
+            </where>
+        </sql>
+
+        <select id="query" resultMap="BaseResultMap" parameterType="com.cx.chenxing.userzan.param.UserZanQuery">
+                select
+                <include refid="Base_Column_List"/>
+                    from user_zan
+                <include refid="queryWhere"/>
+                <if test="sortColumns != null">
+                    order by #{sortColumns}
+                </if>
+        </select>
+</mapper>

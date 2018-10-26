@@ -10,7 +10,7 @@
   </parent>
   
   <artifactId>chenxing_service</artifactId>
-  <name>业务模块</name>
+  <name>chenxing_service</name>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
