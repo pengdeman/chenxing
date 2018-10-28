@@ -13,26 +13,24 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.cx.chenxing.user.UserService;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * 用户相关
+ */
 //@Controller+@ResponseBody相当于@RestController
 @Controller
-@RequestMapping("/")
+@RequestMapping("/user")
 public class UserController {
 	
 	@Resource
     private UserService userService;
-
-	/**
-	 * 系统首页
-	 * @return
-	 */
-	@RequestMapping("/index")
-	public String index() {
-		return "frontpages/index";
-	}
 
 	/**
 	 * 用户登录
@@ -47,22 +45,25 @@ public class UserController {
 		String nowtime = sdfs.format(new Date());
 		String loginName = request.getParameter("username");
 		String password = request.getParameter("password");
-		UserBean loginUser = userService.findLoginUserByLoginNameAndPassword(loginName,MD5Util.MD5(password, ""));
-		if(loginUser!=null && "1".equals(loginUser.getActivate())){
+		UserBean userBean = new UserBean();
+		userBean.setPassword(MD5Util.MD5(password, ""));
+		userBean.setAccount(loginName);
+		List<UserBean> ulist = userService.query(userBean).getResult();
+		//UserBean loginUser = userService.findLoginUserByLoginNameAndPassword(loginName,MD5Util.MD5(password, ""));
+		if(ulist.size() > 0 && "1".equals(ulist.get(0).getActivate())){
+			UserBean loginUser = ulist.get(0);
 			String logintime = sdfs.format(loginUser.getLoginTime());
 			if(!logintime.equals(nowtime)){
 				loginUser.setAccountLevel(loginUser.getAccountLevel()+1);
 			}
 			loginUser.setLoginTime(new Date());
 			userService.updateSelective(loginUser);
-
-			request.getSession().setAttribute("user", loginUser);//得到当前用户的session，需要先创建一个
-			model.addAttribute("user", loginUser);
-			HttpSession session = request.getSession();
-			session.setAttribute("login", loginUser);
+			//model.addAttribute("user", loginUser);
+			HttpSession session = request.getSession();//得到当前用户的session，需要先创建一个
+			session.setAttribute("user", loginUser);
 
 			return "frontpages/index";
-		}else if(loginUser!=null && "0".equals(loginUser.getActivate())){
+		}else if(ulist.size() > 0 && "0".equals(ulist.get(0).getActivate())){
 			model.addAttribute("messge", "您的账号还未激活，请激活后登录！");
 			return "frontpages/index";
 		}else{
@@ -120,7 +121,7 @@ public class UserController {
 			String sender_password = "p920521";
 			String[] toUser = new String[]{mail};
 			MailUtil se = new MailUtil(mailHost, sender_username, sender_password, false);
-			se.doSendHtmlEmail("恭喜您！辰星上的家已经搭建完成啦！", "［辰星］<div>亲爱的辰星家人-"+userName+"，您好！恭喜您辰星账号已注册成功！<a href='"+url+"locationactivate?mail="+mail+"'>请点击</a>激活该账号！</div>", toUser, null);
+			se.doSendHtmlEmail("恭喜您！辰星上的家已经搭建完成啦！", "［辰星］<div>亲爱的辰星家人-"+userName+"，您好！恭喜您辰星账号已注册成功！<a href='"+url+"user/locationactivate?mail="+mail+"'>请点击</a>激活该账号！</div>", toUser, null);
 			model.addAttribute("messge", "注册成功！请登录注册邮箱激活账号！(注：如未收到邮件，可能被识别为垃圾邮件了，请到邮箱垃圾箱中查看，并设置为这不是垃圾邮件！)");
 		} catch (Exception e) {
 			model.addAttribute("messge", "邮箱格式异常，请检查邮箱准确性！");
@@ -149,5 +150,95 @@ public class UserController {
 		return "frontpages/activesuccess";
 	}
 
+
+	/**
+	 * 发送重置密码的邮箱验证码
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/sendcode")
+	public void sendCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Map<String, Object> m = new HashMap<>();
+		String usermail = request.getParameter("usermail");
+		if(usermail.length() < 0){
+			m.put("mes",1);
+		}else{
+			UserBean ub = new UserBean();
+			ub.setAccount(usermail);
+			List<UserBean> ulist = userService.query(ub).getResult();
+			if(ulist.size() == 0){
+				m.put("mes",2);
+			}else{
+				//生成随机码
+				String mailcode = (int)((Math.random()*9+1)*1000)+"";
+				//发送邮件
+				try {
+					String mailHost = "smtp.163.com";
+					String sender_username = "penderman@163.com";
+					String sender_password = "p920521";
+					String[] toUser = new String[]{usermail};
+					MailUtil se = new MailUtil(mailHost, sender_username, sender_password, false);
+					se.doSendHtmlEmail("您好！收到了辰星家园的来信！", "［辰星］<div>亲爱的辰星家人，您好！您的验证码为：【"+mailcode+"】！</div>", toUser, null);
+					m.put("mes",3);
+				} catch (Exception e) {
+					m.put("mes",4);
+				}
+				HttpSession session = request.getSession();
+				session.setAttribute("mailcode", mailcode);
+			}
+		}
+		response.setCharacterEncoding("utf-8");
+		PrintWriter pw = response.getWriter();
+		pw.print(JsonUtil.toJson(m).toString());
+		pw.flush();
+	}
+
+	/**
+	 * 修改密码
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/modifypassword")
+	public void modifyPassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Map<String, Object> m = new HashMap<>();
+		String usermail = request.getParameter("usermail");
+		String checkma = request.getParameter("checkma");
+		String newpassword = request.getParameter("newpassword");
+		HttpSession session = request.getSession();
+		String mailcode = (String)session.getAttribute("mailcode");
+		if(mailcode.length()<0){
+			m.put("flag", 1);
+		}else if(mailcode.equals(checkma)){
+			UserBean ub = new UserBean();
+			ub.setAccount(usermail);
+			List<UserBean> ulist = userService.query(ub).getResult();
+			if(ulist.size() < 0){
+				m.put("flag", 2);
+			}else{
+				UserBean u = new UserBean();
+				u.setPassword(MD5Util.MD5(newpassword, ""));
+				userService.updateSelective(u);
+				m.put("flag", 4);
+			}
+		}else{
+			m.put("flag", 3);
+		}
+		response.setCharacterEncoding("utf-8");
+		PrintWriter pw = response.getWriter();
+		pw.print(JsonUtil.toJson(m).toString());
+		pw.flush();
+	}
+
+	/**
+	 * 登出
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/loginout")
+	public String loginout(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		return "frontpages/index";
+	}
 
 }

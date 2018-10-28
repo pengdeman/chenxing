@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="<%=basePath%>">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ga2vOgjKiex14wPRkTblnAHYIB2bWrTy"></script>
     <title>辰星🌟</title>
 
     <!-- Bootstrap -->
@@ -80,14 +81,18 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">主页</a></li>
+          <li class="active"><a href="<%=basePath%>index">主页</a></li>
           <li><a href="#">足迹</a></li>
           <li><a href="#">留言板</a></li>
-          <li><a href="#">个人中心</a></li>
+          <li><a href="<%=basePath%>personalcenter/index">个人中心</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#" data-toggle="modal" data-target="#registerModal"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+          <c:if test="${user == null}">
+            <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-user"></span>登录</a></li>
+          </c:if>
+          <c:if test="${user != null}">
+            <li><a href="#" data-toggle="modal" data-target="" onclick="tuichu()"><span class="glyphicon glyphicon-log-in"></span> 登出</a></li>
+          </c:if>
         </ul>
       </div>
     </div>
@@ -105,7 +110,18 @@
               <td colspan="4" style="text-align: center;">
                 <span class="glyphicon glyphicon-user"></span>
                 <!-- ♂表示男性，♀表示女性 -->
-                <strong>彭英峻</strong>&nbsp;&nbsp;<strong>♂</strong>
+                <c:if test="${user == null}">
+                  <strong>外星人游客</strong>&nbsp;&nbsp;
+                </c:if>
+                <c:if test="${user != null}">
+                  <strong>${user.userName}</strong>&nbsp;&nbsp;
+                </c:if>
+                <c:if test="${user.sex == 1}">
+                  <strong>♂</strong>
+                </c:if>
+                <c:if test="${user.sex == 2}">
+                  <strong>♀</strong>
+                </c:if>
               </td>
             </tr>
             <tr>
@@ -128,6 +144,11 @@
             </tr>
           </table>
         </div>
+
+        <div style="text-align: center;">
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#chenxingModal">辰星发布</button>
+        </div>
+
         <br>
         <div class="hideline"><!-- 该div用于屏幕宽度小于500px时隐藏友情链接 -->
         <h3>友情链接</h3>
@@ -141,104 +162,57 @@
         <hr class="hidden-sm hidden-md hidden-lg">
       </div>
       <div class="col-sm-8">
-        <h2></h2>
-        <div class="fakeimg" style="background-image: url('bj.jpg')"></div>
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <table class="table" frame="void">
-              <tr style="height: 20px;">
-                <td rowspan="2" width="55px;">
-                  <img src="touxiang.jpg" class="cxtouxiang">
-                </td>
-                <td>
-                  <label style="margin-top: 5px;">彭英峻</label>&nbsp;&nbsp;<label title="登录365天，皇冠等级">👑</label>
-                  <button type="button" class="btn btn-default cxguanzhu">➕关注</button>
-                </td>
-              </tr>
-              <tr>
-                <td class="cxtime">2018-09-25 09:23:45</td>
-              </tr>
-            </table>
-            <div class="cxtext">
-              北京故宫是中国明清两代的皇家宫殿，旧称为紫禁城，位于北京中轴线的中心，
-              是中国古代宫廷建筑之精华。北京故宫以三大殿为中心，占地面积72万平方米，
-              建筑面积约15万平方米，有大小宫殿七十多座，房屋九千余间。是世界上现存规模最大、
-              保存最为完整的木质结构古建筑之一。北京故宫于明成祖永乐四年（1406年）开始建设，
-              以南京故宫为蓝本营建，到永乐十八年（1420年）建成。它是一座长方形城池，
-              南北长961米，东西宽753米，四面围有高10米的城墙，城外有宽52米的护城河。
-              紫禁城内的建筑分为外朝和内廷两部分。外朝的中心为太和殿、中和殿、保和殿，
-              统称三大殿，是国家举行大典礼的地方。内廷的中心是乾清宫、交泰殿、坤宁宫，
-              统称后三宫，是皇帝和皇后居住的正宫。
-            </div>
-            <br>
-            <div class="btn-group" style="margin-left: -15px;">
-              <button type="button" class="btn btn-default bodernone">
-                <span class="glyphicon glyphicon-map-marker" style="font-size: 10px;">北京市朝阳区新华金融大厦</span>
-              </button>
-            </div>
-            <br>
-            <HR width="100%" color=#987cb9 SIZE=10 />
-            <div class="btn-group" style="margin-left: -15px;">
-              <button type="button" class="btn btn-default bodernone">
-                <span class="glyphicon glyphicon-eye-open"> 822</span>
-              </button>
-            </div>
-            <div class="btn-group" style="float: right; margin-right: -10px;">
-              <button type="button" class="btn btn-default bodernone">
-                <span class="glyphicon glyphicon-share-alt"> 155</span>
-              </button>
-              <button type="button" class="btn btn-default bodernone">
-                <span class="glyphicon glyphicon-edit"> 25</span>
-              </button>
-              <button type="button" class="btn btn-default bodernone">
-                <span class="glyphicon glyphicon-heart-empty"> 15</span>
-                <!-- <span class="glyphicon glyphicon-heart"></span> 已赞 -->
-              </button>
+        <c:forEach items="${articleList}" var="item">
+          <h2></h2>
+          <div class="fakeimg" style="background-image: url('${item.picurl }')"></div>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <table class="table" frame="void">
+                <tr style="height: 20px;">
+                  <td rowspan="2" width="55px;">
+                    <img src="touxiang.jpg" class="cxtouxiang">
+                  </td>
+                  <td>
+                    <label style="margin-top: 5px;">${item.creUid }</label>&nbsp;&nbsp;<label title="登录365天，皇冠等级">👑</label>
+                    <button type="button" class="btn btn-default cxguanzhu">➕关注</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="cxtime">${item.creTime }</td>
+                </tr>
+              </table>
+              <div class="cxtext">
+                  ${item.article }
+              </div>
+              <br>
+              <div class="btn-group" style="margin-left: -15px;">
+                <button type="button" class="btn btn-default bodernone">
+                  <span class="glyphicon glyphicon-map-marker" style="font-size: 10px;">${item.location }</span>
+                </button>
+              </div>
+              <br>
+              <HR width="100%" color=#987cb9 SIZE=10 />
+              <div class="btn-group" style="margin-left: -15px;">
+                <button type="button" class="btn btn-default bodernone">
+                  <span class="glyphicon glyphicon-eye-open"> ${item.ydnum }</span>
+                </button>
+              </div>
+              <div class="btn-group" style="float: right; margin-right: -10px;">
+                <button type="button" class="btn btn-default bodernone">
+                  <span class="glyphicon glyphicon-share-alt"> ${item.zfnum }</span>
+                </button>
+                <button type="button" class="btn btn-default bodernone">
+                  <span class="glyphicon glyphicon-edit"> ${item.plnum }</span>
+                </button>
+                <button type="button" class="btn btn-default bodernone">
+                  <span class="glyphicon glyphicon-heart-empty"> ${item.dznum }</span>
+                  <!-- <span class="glyphicon glyphicon-heart"></span> 已赞 -->
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <br>
-        <h2></h2>
-        <div class="fakeimg" style="background-image: url('gz.jpg')"></div>
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="cxtext">
-              广州塔（英语：Canton Tower）又称广州新电视塔，昵称小蛮腰。位于广州市海珠区（
-              艺洲岛）赤岗塔附近，距离珠江南岸125米，与珠江新城、花城广场、海心沙岛隔江相望。
-              广州塔塔身主体高454米，天线桅杆高146米，总高度600米。是中国第一高塔，
-              世界第二高塔，仅次于东京晴空塔，是国家AAAA级旅游景区。广州塔塔身168米–334.4米
-              处设有“蜘蛛侠栈道”，是世界最高最长的空中漫步云梯。塔身422.8米处设有旋转餐厅，
-              是世界最高的旋转餐厅。塔身顶部450~454米处设有摩天轮，是世界最高摩天轮。
-              天线桅杆455米~485米处设有“极速云霄”速降游乐项目，是世界最高的垂直速降游乐项目。
-              天线桅杆488米处设有户外摄影观景平台，是世界最高的户外观景平台，超越了迪拜哈利法塔的442米室外
-              观景平台，以及加拿大国家电视塔447米的“天空之盖”的高度
-            </div>
-            <br>
-            <div class="btn-group" style="margin-left: -15px;">
-              <button type="button" class="btn btn-default" style="border:none">
-                <span class="glyphicon glyphicon-map-marker" style="font-size: 10px;">黑龙江省桦南县林业大院3号楼</span>
-              </button>
-            </div>
-            <br>
-            <HR width="80%" color=#987cb9 SIZE=10 />
-            <div class="btn-group" style="margin-left: -15px;">
-              <button type="button" class="btn btn-default" style="border:none">
-                <span class="glyphicon glyphicon-eye-open"> 222</span>
-              </button>
-            </div>
-            <div class="btn-group" style="float: right;">
-              <button type="button" class="btn btn-default" style="border:none">
-                <span class="glyphicon glyphicon-share-alt"> 92</span>
-              </button>
-              <button type="button" class="btn btn-default" style="border:none">
-                <span class="glyphicon glyphicon-edit"> 65</span>
-              </button>
-              <button type="button" class="btn btn-default" style="border:none">
-                <span class="glyphicon glyphicon-heart-empty"> 23</span>
-              </button>
-            </div>
-          </div>
-        </div>
+          <br>
+        </c:forEach>
       </div>
     </div>
   </div>
@@ -264,7 +238,7 @@
           </h1>
         </div>
         <div class="modal-body">
-          <form class="form-group" action="<%=basePath%>locationreg" id="regist-form_id" method="post">
+          <form class="form-group" action="<%=basePath%>user/locationreg" id="regist-form_id" method="post">
             <div class="form-group">
               <label>昵称</label>
               <input class="form-control" type="text" name="signup_name" placeholder="给自己起一个帅气的名字吧">
@@ -302,7 +276,7 @@
           </h1>
         </div>
         <div class="modal-body">
-          <form class="form-group" action="<%=basePath%>locationsign" id="signin-form_id" method="post">
+          <form class="form-group" action="<%=basePath%>user/locationsign" id="signin-form_id" method="post">
             <div class="form-group">
               <label>用户名</label>
               <input class="form-control" type="text" name="username" placeholder="请输入用户名">
@@ -315,7 +289,111 @@
               <button class="btn btn-primary" type="submit" onclick="signinsubform()">登录</button>
               <button class="btn btn-danger" data-dismiss="modal">取消</button>
             </div>
-            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#registerModal">还没有账号？点我注册</a>
+            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#registerModal">还没有账号？点我注册</a>  |
+            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#passwardModal">忘记密码</a>
+          </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <!-- 忘记密码模态框（Modal） -->
+  <div class="modal fade" id="passwardModal" tabindex="-1" role="dialog" aria-labelledby="passwardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-image: url('xingchen.jpg');background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
+          <button type="button" class="close" data-dismiss="modal"
+                  aria-hidden="true">×
+          </button>
+          <h1 class="text-center" id="passwardModalLabel" style="color: white">
+            重置密码
+          </h1>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <label>邮箱账号</label>
+              <div class="form-inline">
+                <input class="form-control" type="text" name="usermail" placeholder="请输入邮箱账号" style="width: 82%;">
+                <button class="btn btn-primary modifybutton" type="button" onclick="sendma()"  data-loading-text="已发送">发送验证码</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>验证码</label>
+              <input class="form-control" type="text" name="checkma" placeholder="请输入邮箱接收到的验证码">
+            </div>
+            <div class="form-group">
+              <label>新密码</label>
+              <input class="form-control" type="text" name="newpassword" placeholder="请输入您的新密码">
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary" type="submit" onclick="modifypassword()">确认</button>
+              <button class="btn btn-danger" data-dismiss="modal">取消</button>
+            </div>
+            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#loginModal">返回登录</a>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <!-- 发布辰星模态框（Modal） -->
+  <div class="modal fade" id="chenxingModal" tabindex="-1" role="dialog" aria-labelledby="chenxingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-image: url('xingchen.jpg');background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
+          <button type="button" class="close" data-dismiss="modal"
+                  aria-hidden="true">×
+          </button>
+          <h1 class="text-center" id="chenxingModalLabel" style="color: white">
+            辰星发布
+          </h1>
+        </div>
+        <div class="modal-body">
+          <form class="form-group" action="<%=basePath%>article/submitarticle" id="article-form_id" method="post">
+            <div class="form-group">
+              <label>辰星密语</label>
+              <textarea class="form-control" type="text" name="signup_name" style="width: 99.5%; min-height: 150px;">
+
+              </textarea>
+            </div>
+            <div class="form-group">
+              <label>权限设置</label>
+                <div class="input-group">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      选择权限
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a href="javascript:getquanxian('公开')">公开</a></li>
+                      <li><a href="javascript:getquanxian('仅自己可见')">仅自己可见</a></li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                  <input type="text" class="form-control" id="quanxian">
+                </div><!-- /input-group -->
+            </div>
+            <div class="form-group">
+              <label>定位地点</label>
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    选择地点
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" id="localselect">
+                    <li><a onclick="getlocal()">☞定位中☢...</a></li>
+                  </ul>
+                </div><!-- /btn-group -->
+                <input type="text" class="form-control" id="local">
+              </div><!-- /input-group -->
+            </div>
+            <div class="form-group">
+              <label>辰星密语</label>
+              <input id="f_upload" type="file" class="file" />
+            </div>
+            <div class="text-right">
+              <button class="btn btn-primary" type="submit" onclick="chenxingsubform()">提交</button>
+              <button class="btn btn-danger" data-dismiss="modal">取消</button>
+            </div>
           </form>
         </div>
       </div><!-- /.modal-content -->
@@ -323,6 +401,7 @@
   </div><!-- /.modal -->
 
   <script type="text/javascript">
+
       /**
        * 获取后台message信息
        */
@@ -331,7 +410,158 @@
           if(messge != ''){
               alert(messge);
           }
+          getlocattion()
       });
+
+      /**
+       * 获取定位
+       */
+      function getlocattion(){
+          $("#sele1").html("");
+          $("#sele1").html("<li><a onclick='getlocal("+""+")'>☞定位中☢...</a></li>");
+          var geolocation = new BMap.Geolocation();
+          var geoc = new BMap.Geocoder();
+          geolocation.getCurrentPosition(function(r){
+              if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                  var pt = new BMap.Point(r.point.lng, r.point.lat);
+                  var dzs = "";
+                  var dzss = "";
+                  geoc.getLocation(pt, function(rs){
+                      var addComp = rs.addressComponents;
+                      $("#lng").val(r.point.lng);
+                      $("#lat").val(r.point.lat);
+                      dzs = addComp.province +".";
+                      if(addComp.province != addComp.city){
+                          dzs = dzs + addComp.city+ ".";
+                      }
+                      dzs = dzs + addComp.district +".";
+                      dzss = dzs+addComp.street;
+                      /* 				if(addComp.street != ""){
+                                          dzs = dzs + addComp.street+"•";
+                                      } */
+                      //addComp.province +  +"•"+ addComp.streetNumber
+                  });
+                  $.ajax({
+                      url:"https://api.map.baidu.com/place/v2/search?query=旅游景区&location="+r.point.lat+","+r.point.lng+"&radius=1000&page_size=20&output=json&ak=ga2vOgjKiex14wPRkTblnAHYIB2bWrTy",
+                      type:"GET",
+                      dataType: "JSONP",
+                      error:function(request){
+                          alert("获取失败！");
+                      },
+                      success:function(data){
+                          var selelist = '<li><a onclick="getlocal('+'\''+dzss+'\''+')">☞'+dzss+'</a></li>';
+                          if(status == 0){
+                              $.each(data.results, function (i, item) {
+                                  var locald = dzs+""+item.name;
+                                      selelist = selelist + '<li><a onclick="getlocal('+'\''+locald+'\''+')">☞'+item.name+'</a></li>'
+                              });
+                          }else{
+                              selelist = selelist + dzs;
+                          }
+                          $("#localselect").html(selelist);
+                      }
+                  });
+              }
+          },{enableHighAccuracy: true})
+      }
+
+      /**
+       * 选择权限
+       */
+      function getquanxian(mes){
+          $("#quanxian").val("👉  "+mes);
+      }
+
+      function getlocal(mes){
+          $("#local").val("👉  "+mes);
+      }
+
+      /**
+       * 登出
+       */
+      function tuichu(){
+          window.location.href="<%=basePath%>user/loginout";
+      }
+
+      /**
+       * 发送验证码
+       */
+      function sendma() {
+          if ($("input[name='usermail']").val().length == 0) {
+              alert("请输入邮箱账号。");
+              return;
+          }
+          var usermail = $("input[name='usermail']").val();
+          $.ajax({
+              cache:true,
+              type:"POST",
+              url:"<%=basePath%>user/sendcode",
+              data:{usermail: usermail},
+              async:false,
+              error:function(request){
+                  alert("发送失败！");
+              },
+              success:function(data){
+                  var jsonObj=eval("("+data+")");
+                  if(jsonObj.mes == 1){
+                      alert("请填写正确的邮箱账号！");
+                  }else if(jsonObj.mes == 2){
+                      alert("该邮箱格式错误或该邮箱账号不存在！");
+                  }else if(jsonObj.mes == 3){
+                      $(".modifybutton").button('loading').delay(10000).queue(function() {
+                          $(".modifybutton").button('reset');
+                          $(".modifybutton").dequeue();
+                      });
+                      alert("该邮箱账号的验证码已发送，请去邮箱查看并输入到验证码一栏中！");
+                  }else{
+                      alert("发生了未知错误！");
+                  }
+              }
+          });
+      }
+
+      /**
+       * 确认修改密码
+       */
+      function modifypassword() {
+          if ($("input[name='checkma']").val().length == 0) {
+              alert("请输入验证码。");
+              return;
+          }
+          if ($("input[name='newpassword']").val().length == 0) {
+              alert("请输入新密码。");
+              return;
+          }
+          if ($("input[name='usermail']").val().length == 0) {
+              alert("请输入邮箱。");
+              return;
+          }
+          var checkma = $("input[name='checkma']").val();
+          var newpassword = $("input[name='newpassword']").val();
+          var usermail = $("input[name='usermail']").val();
+
+          $.ajax({
+              cache:true,
+              type:"POST",
+              url:"<%=basePath%>user/modifypassword",
+              data:{checkma: checkma, "newpassword":newpassword, "usermail":usermail},
+              async:false,
+              error:function(request){
+                  alert("修改失败！");
+              },
+              success:function(data){
+                  var jsonObj=eval("("+data+")");
+                  if(jsonObj.flag == 1 || jsonObj.flag == 3){
+                      alert("您输入的验证码不匹配！");
+                  }else if(jsonObj.flag == 2){
+                      alert("您输入的邮箱有误！");
+                  }else if(jsonObj.flag == 4){
+                      alert("密码修改成功！");
+                  }
+                  $('#passwardModal').modal('hide');
+              }
+          });
+      }
 
       /**
        * 登录

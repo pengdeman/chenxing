@@ -63,10 +63,10 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">主页</a></li>
+          <li><a href="<%=basePath%>index">主页</a></li>
           <li><a href="#">足迹</a></li>
           <li><a href="#">留言板</a></li>
-          <li><a href="#">个人中心</a></li>
+          <li class="active"><a href="<%=basePath%>personalcenter/index">个人中心</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
@@ -214,7 +214,7 @@
   <div class="row footer-bottom" style="background-color: #aaaaaa;">
     <br>
     <ul class="list-inline text-center">
-      <li>Copyright &copy;2018. n 辰星公司 Software All Rights Reserved.</li>
+      <li>Copyright &copy;2018. n 辰星集团 Software All Rights Reserved.</li>
     </ul>
     <br>
   </div>
