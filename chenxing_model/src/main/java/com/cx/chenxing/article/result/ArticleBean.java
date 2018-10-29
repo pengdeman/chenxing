@@ -1,20 +1,13 @@
-/*
- * Powered By [meinong]
- * Web Site: http://www.meinong.cn
- * Since 2015 - 2018
- */
-
 package com.cx.chenxing.article.result;
 
 import com.cx.chenxing.mybatisutils.PageCondition;
-import java.util.Date;
 
 public class ArticleBean extends PageCondition {
 
 	private Long id;
 	private String article;
-	private Date creTime;
-	private Integer creUid;
+	private String creTime;
+	private Long creUid;
 	private String picurl;
 	private String location;
 	private String lng;
@@ -23,7 +16,14 @@ public class ArticleBean extends PageCondition {
 	private Integer plnum;
 	private Integer ydnum;
 	private Integer dznum;
+	private String show;
 
+	public void setShow(String value) {
+		this.show = value;
+	}
+	public String getShow() {
+		return this.show;
+	}
 		public void setId(Long value) {
 			this.id = value;
 		}	
@@ -36,16 +36,16 @@ public class ArticleBean extends PageCondition {
 		public String getArticle() {
 			return this.article;
 		}
-		public void setCreTime(Date value) {
+		public void setCreTime(String value) {
 			this.creTime = value;
 		}	
-		public Date getCreTime() {
+		public String getCreTime() {
 			return this.creTime;
 		}
-		public void setCreUid(Integer value) {
+		public void setCreUid(Long value) {
 			this.creUid = value;
 		}	
-		public Integer getCreUid() {
+		public Long getCreUid() {
 			return this.creUid;
 		}
 		public void setPicurl(String value) {

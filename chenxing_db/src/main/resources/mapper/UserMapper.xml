@@ -325,14 +325,6 @@
         </if>
     </select>
 
-    <!-- 通过用户名和密码找user -->
-    <select id="findLoginUserByLoginNameAndPassword" resultType="com.cx.chenxing.user.result.UserBean" parameterType="com.cx.chenxing.user.param.UserQuery" >
-        select
-        <include refid="Base_Column_List" />
-        from user
-        where account = #{account,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
-    </select>
-
     <select id="queryAccount" resultMap="BaseResultMap" parameterType="com.cx.chenxing.user.param.UserQuery" >
         select
         <include refid="Base_Column_List" />

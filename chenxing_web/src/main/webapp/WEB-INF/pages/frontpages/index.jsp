@@ -19,6 +19,8 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fileinput.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="layer/mobile/need/layer.css" />
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
@@ -29,6 +31,9 @@
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="js/locales/zh.js"></script>
+    <script src="js/fileinput.js"></script>
+    <script type="text/javascript" src="layer/mobile/layer.js"></script>
     <style>
       .fakeimg {
         height: 270px;
@@ -348,10 +353,10 @@
           </h1>
         </div>
         <div class="modal-body">
-          <form class="form-group" action="<%=basePath%>article/submitarticle" id="article-form_id" method="post">
+          <form class="form-group" action="<%=basePath%>article/submitarticle" id="article-form_id" method="post" enctype="multipart/form-data">
             <div class="form-group">
               <label>辰星密语</label>
-              <textarea class="form-control" type="text" name="signup_name" style="width: 99.5%; min-height: 150px;">
+              <textarea class="form-control" type="text" name="article" id="article" style="width: 99.5%; min-height: 150px;">
 
               </textarea>
             </div>
@@ -368,7 +373,7 @@
                       <li><a href="javascript:getquanxian('仅自己可见')">仅自己可见</a></li>
                     </ul>
                   </div><!-- /btn-group -->
-                  <input type="text" class="form-control" id="quanxian">
+                  <input type="text" class="form-control" id="quanxian" name="show" value="公开">
                 </div><!-- /input-group -->
             </div>
             <div class="form-group">
@@ -383,12 +388,14 @@
                     <li><a onclick="getlocal()">☞定位中☢...</a></li>
                   </ul>
                 </div><!-- /btn-group -->
-                <input type="text" class="form-control" id="local">
+                <input type="text" class="form-control" id="local" name="location">
+                <input type="hidden" name="lng" id="lng" value=""/>
+                <input type="hidden" name="lat" id="lat" value=""/>
               </div><!-- /input-group -->
             </div>
             <div class="form-group">
-              <label>辰星密语</label>
-              <input id="f_upload" type="file" class="file" />
+              <label>辰星美图</label>
+              <input id="f_upload" type="file" class="file" name="picurl"/>
             </div>
             <div class="text-right">
               <button class="btn btn-primary" type="submit" onclick="chenxingsubform()">提交</button>
@@ -412,6 +419,34 @@
           }
           getlocattion()
       });
+
+      /**
+       * 辰星发布
+       */
+      function chenxingsubform() {
+          if ($("#article").val().length == 0) {
+              alert("请填写文字发出你的辰星密语吧。");
+              return;
+          }
+          if ($("input[name='show']").val().length == 0) {
+              alert("请选择一个你分享的权限。");
+              return;
+          }
+          if ($("input[name='location']").val().length == 0) {
+              alert("请选择一个地点再分享吧。");
+              return;
+          }
+          if ($("input[name='picurl']").val().length == 0) {
+              alert("请选择一个美丽图片。");
+              return;
+          }
+          layer.open({
+              type: 2
+              ,content: '提交中...'
+              ,time: 5
+          });
+          $("#article-form_id").submit();
+      }
 
       /**
        * 获取定位
@@ -472,6 +507,9 @@
           $("#quanxian").val("👉  "+mes);
       }
 
+      /**
+       * 选择位置
+       */
       function getlocal(mes){
           $("#local").val("👉  "+mes);
       }

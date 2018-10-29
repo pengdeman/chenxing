@@ -4,7 +4,6 @@ import com.cx.chenxing.mybatisutils.Page;
 import com.cx.chenxing.user.dao.UserDao;
 import com.cx.chenxing.user.entity.User;
 import com.cx.chenxing.user.param.UserQuery;
-import com.cx.chenxing.user.result.UserBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,13 +52,6 @@ public class UserManager {
         Page<User> page = new Page<User>(userQuery);
         page.setResult(list);
         return page;
-    }
-
-    public UserBean findLoginUserByLoginNameAndPassword(String loginName, String password) {
-        UserQuery uquery = new UserQuery();
-        uquery.setAccount(loginName);
-        uquery.setPassword(password);
-        return this.userDao.findLoginUserByLoginNameAndPassword(uquery);
     }
 
     public List<User> queryAccount(UserQuery uQuery) {

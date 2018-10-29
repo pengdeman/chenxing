@@ -17,7 +17,14 @@ public class Article implements java.io.Serializable{
 	private Integer plnum;
 	private Integer ydnum;
 	private Integer dznum;
+	private String show;
 
+	public void setShow(String value) {
+		this.show = value;
+	}
+	public String getShow() {
+		return this.show;
+	}
 		public void setId(Long value) {
 			this.id = value;
 		}	

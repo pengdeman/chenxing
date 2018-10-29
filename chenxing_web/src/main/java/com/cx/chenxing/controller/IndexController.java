@@ -1,7 +1,6 @@
 package com.cx.chenxing.controller;
 
 import com.cx.chenxing.article.ArticleService;
-import com.cx.chenxing.article.param.ArticleQuery;
 import com.cx.chenxing.article.result.ArticleBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +25,7 @@ public class IndexController {
      */
     @RequestMapping("/index")
     public String index(Model model) {
-        ArticleQuery articleQuery = new ArticleQuery();
+        ArticleBean articleQuery = new ArticleBean();
         List<ArticleBean> articleList = articleService.query(articleQuery).getResult();
         model.addAttribute("articleList", articleList);
         return "frontpages/index";

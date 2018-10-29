@@ -26,7 +26,5 @@ public interface UserService {
         
     public int delete(long id);
 
-    public UserBean findLoginUserByLoginNameAndPassword(String loginName, String password);
-
     List<User> queryAccount(UserQuery uQuery);
 }

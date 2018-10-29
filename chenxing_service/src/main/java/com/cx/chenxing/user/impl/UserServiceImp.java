@@ -43,11 +43,6 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserBean findLoginUserByLoginNameAndPassword(String loginName, String password) {
-        return this.userManager.findLoginUserByLoginNameAndPassword(loginName, password);
-    }
-
-    @Override
     public List<User> queryAccount(UserQuery uQuery) {
         return userManager.queryAccount(uQuery);
     }

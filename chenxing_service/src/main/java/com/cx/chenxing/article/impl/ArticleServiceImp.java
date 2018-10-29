@@ -45,7 +45,8 @@ public class ArticleServiceImp implements ArticleService {
         return ModelUtil.copyObject(articleManager.selectByPrimaryKey(id), ArticleBean.class);
     }
     
-    public Page<ArticleBean> query(ArticleQuery articleQuery) {
+    public Page<ArticleBean> query(ArticleBean articleBean) {
+        ArticleQuery articleQuery = ModelUtil.copyObject(articleBean, ArticleQuery.class);
         return ModelUtil.copyPage(articleManager.query(articleQuery), ArticleBean.class);
     }
 }

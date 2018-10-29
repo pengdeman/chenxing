@@ -8,7 +8,6 @@ import com.cx.chenxing.user.result.UserBean;
 import java.util.List;
 
 public interface UserDao extends BaseDao<User,UserQuery,Integer> {
-    UserBean findLoginUserByLoginNameAndPassword(UserQuery uquery);
 
     List<User> queryAccount(UserQuery uQuery);
 }

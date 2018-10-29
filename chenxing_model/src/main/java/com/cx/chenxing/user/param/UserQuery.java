@@ -1,7 +1,6 @@
 package com.cx.chenxing.user.param;
 
 import com.cx.chenxing.mybatisutils.PageCondition;
-import java.util.Date;
 
 public class UserQuery extends PageCondition {
 	private Long id;
@@ -13,11 +12,11 @@ public class UserQuery extends PageCondition {
 	private Integer age;
 	private String sex;
 	private String img;
-	private Date loginTime;
-	private Date creTime;
+	private String loginTime;
+	private String creTime;
 	private String activate;
 	private String adress;
-	private Date birthday;
+	private String birthday;
 	private String signature;
 	private Integer accountLevel;//账号等级
 
@@ -81,16 +80,16 @@ public class UserQuery extends PageCondition {
 		public String getImg() {
 			return this.img;
 		}
-		public void setLoginTime(Date value) {
+		public void setLoginTime(String value) {
 			this.loginTime = value;
 		}	
-		public Date getLoginTime() {
+		public String getLoginTime() {
 			return this.loginTime;
 		}
-		public void setCreTime(Date value) {
+		public void setCreTime(String value) {
 			this.creTime = value;
 		}	
-		public Date getCreTime() {
+		public String getCreTime() {
 			return this.creTime;
 		}
 		public void setActivate(String value) {
@@ -105,10 +104,10 @@ public class UserQuery extends PageCondition {
 		public String getAdress() {
 			return this.adress;
 		}
-		public void setBirthday(Date value) {
+		public void setBirthday(String value) {
 			this.birthday = value;
 		}	
-		public Date getBirthday() {
+		public String getBirthday() {
 			return this.birthday;
 		}
 		public void setSignature(String value) {

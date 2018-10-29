@@ -1,12 +1,11 @@
 package com.cx.chenxing.article.param;
 
 import com.cx.chenxing.mybatisutils.PageCondition;
-import java.util.Date;
 
 public class ArticleQuery extends PageCondition {
 	private Long id;
 	private String article;
-	private Date creTime;
+	private String creTime;
 	private Integer creUid;
 	private String picurl;
 	private String location;
@@ -16,7 +15,14 @@ public class ArticleQuery extends PageCondition {
 	private Integer plnum;
 	private Integer ydnum;
 	private Integer dznum;
+	private String show;
 
+	public void setShow(String value) {
+		this.show = value;
+	}
+	public String getShow() {
+		return this.show;
+	}
 		public void setId(Long value) {
 			this.id = value;
 		}	
@@ -29,10 +35,10 @@ public class ArticleQuery extends PageCondition {
 		public String getArticle() {
 			return this.article;
 		}
-		public void setCreTime(Date value) {
+		public void setCreTime(String value) {
 			this.creTime = value;
 		}	
-		public Date getCreTime() {
+		public String getCreTime() {
 			return this.creTime;
 		}
 		public void setCreUid(Integer value) {
