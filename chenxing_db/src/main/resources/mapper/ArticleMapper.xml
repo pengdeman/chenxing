@@ -14,11 +14,11 @@
                 <result property="plnum" column="plnum"/>
                 <result property="ydnum" column="ydnum"/>
                 <result property="dznum" column="dznum"/>
-                <result property="show" column="show"/>
+                <result property="shows" column="shows"/>
         </resultMap>
         <sql id="Base_Column_List">
             <![CDATA[
-                id,article,cre_time,cre_uid,picurl,location,lng,lat,zfnum,plnum,ydnum,dznum,show
+                id,article,cre_time,cre_uid,picurl,location,lng,lat,zfnum,plnum,ydnum,dznum,shows
             ]]>
         </sql>
          <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -49,7 +49,7 @@
                     plnum ,
                     ydnum ,
                     dznum ,
-                    show
+                    shows
                 ) VALUES (
                     #{id} ,
                     #{article} ,
@@ -63,7 +63,7 @@
                     #{plnum} ,
                     #{ydnum} ,
                     #{dznum} ,
-                    #{show}
+                    #{shows}
                 )
                  ]]>
         </insert>
@@ -107,8 +107,8 @@
                          <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(dznum)">
                              dznum ,
                          </if>
-                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(show)">
-                             show
+                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(shows)">
+                             shows
                          </if>
                  </trim>
                 <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -148,8 +148,8 @@
                          <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(dznum)">
                             #{dznum} ,
                         </if>
-                        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(show)">
-                            #{show}
+                        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(shows)">
+                            #{shows}
                         </if>
                 </trim>
         </insert>
@@ -192,8 +192,8 @@
                      <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(dznum)">
                          dznum = #{dznum},
                      </if>
-                     <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(show)">
-                        show = #{show}
+                     <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(shows)">
+                        shows = #{shows}
                      </if>
             </set>
              where
@@ -214,7 +214,7 @@
                  plnum = #{plnum},
                  ydnum = #{ydnum},
                  dznum = #{dznum},
-                 show = #{show}
+                 shows = #{shows}
             </set>
                 where
                         id = #{id} 
@@ -260,8 +260,8 @@
                         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(dznum)">
                             dznum = #{dznum} and
                         </if>
-                        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(show)">
-                            show = #{show}
+                        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(shows)">
+                            shows = #{shows}
                         </if>
                 </trim>
             </where>

@@ -3,6 +3,7 @@ package com.cx.chenxing.controller;
 import com.cx.chenxing.article.ArticleService;
 import com.cx.chenxing.article.result.ArticleBean;
 import com.cx.chenxing.user.entity.User;
+import com.cx.chenxing.user.result.UserBean;
 import com.cx.chenxing.utils.NormalUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +37,7 @@ public class ArticleController {
         String lat = request.getParameter("lat");//纬度
         String show = request.getParameter("show");//是否可见 1公开  2仅自己可见
         HttpSession session = request.getSession();
-        User user= (User)session.getAttribute("user");
+        UserBean user= (UserBean) session.getAttribute("user");
         ArticleBean articleBean = new ArticleBean();
         articleBean.setArticle(article);
         articleBean.setCreTime(sdf.format(new Date()));
@@ -44,9 +45,9 @@ public class ArticleController {
         articleBean.setLat(lat);
         articleBean.setLocation(location);
         if("公开".equals(show)){
-            articleBean.setShow("1");
+            articleBean.setShows("1");
         }else if("仅自己可见".equals(show)){
-            articleBean.setShow("2");
+            articleBean.setShows("2");
         }
         if(user != null){
             articleBean.setCreUid(user.getId());
@@ -56,8 +57,8 @@ public class ArticleController {
         }
         String[] types = {"JPG", "PNG", "JPEG", "GIF", "JEPG"};
         try {
-            String[] newfileName = NormalUtils.syqpicdownUrl(reques, "pic",articleBean.getPicurl());
-            if (newfileName != null) {
+            String[] newfileName = NormalUtils.syqpicdownUrl(reques, "picurl",articleBean.getPicurl());
+             if (newfileName != null) {
                 //判断图片类型
                 if (!Arrays.asList(types).contains(newfileName[0].substring(newfileName[0].lastIndexOf(".")+1).toUpperCase())) {
                     model.addAttribute("messge", "照片格式只支持png、jpg、jpeg、gif！");

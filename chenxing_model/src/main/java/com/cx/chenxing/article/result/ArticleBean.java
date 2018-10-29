@@ -16,13 +16,13 @@ public class ArticleBean extends PageCondition {
 	private Integer plnum;
 	private Integer ydnum;
 	private Integer dznum;
-	private String show;
+	private String shows;
 
-	public void setShow(String value) {
-		this.show = value;
+	public void setShows(String value) {
+		this.shows = value;
 	}
-	public String getShow() {
-		return this.show;
+	public String getShows() {
+		return this.shows;
 	}
 		public void setId(Long value) {
 			this.id = value;

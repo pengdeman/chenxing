@@ -52,10 +52,10 @@ public class UserController {
         List<UserBean> ulist = userService.query(userBean).getResult();
         if(ulist.size() > 0 && "1".equals(ulist.get(0).getActivate())){
             UserBean loginUser = ulist.get(0);
-            String logintime = sdfs.format(loginUser.getLoginTime());
-            if(!logintime.equals(nowtime)){
-                loginUser.setAccountLevel(loginUser.getAccountLevel()+1);
-            }
+//            String logintime = loginUser.getLoginTime().substring(0,9);
+//            if(!logintime.equals(nowtime)){
+//                loginUser.setAccountLevel(loginUser.getAccountLevel()+1);
+//            }
             loginUser.setLoginTime(sdf.format(new Date()));
             userService.updateSelective(loginUser);
             HttpSession session = request.getSession();//得到当前用户的session，需要先创建一个

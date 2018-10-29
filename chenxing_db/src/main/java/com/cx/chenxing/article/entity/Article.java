@@ -8,7 +8,7 @@ public class Article implements java.io.Serializable{
 	private Long id;
 	private String article;
 	private Date creTime;
-	private Integer creUid;
+	private Long creUid;
 	private String picurl;
 	private String location;
 	private String lng;
@@ -17,13 +17,13 @@ public class Article implements java.io.Serializable{
 	private Integer plnum;
 	private Integer ydnum;
 	private Integer dznum;
-	private String show;
+	private String shows;
 
-	public void setShow(String value) {
-		this.show = value;
+	public void setShows(String value) {
+		this.shows = value;
 	}
-	public String getShow() {
-		return this.show;
+	public String getShows() {
+		return this.shows;
 	}
 		public void setId(Long value) {
 			this.id = value;
@@ -43,10 +43,10 @@ public class Article implements java.io.Serializable{
 		public Date getCreTime() {
 			return this.creTime;
 		}
-		public void setCreUid(Integer value) {
+		public void setCreUid(Long value) {
 			this.creUid = value;
 		}	
-		public Integer getCreUid() {
+		public Long getCreUid() {
 			return this.creUid;
 		}
 		public void setPicurl(String value) {
