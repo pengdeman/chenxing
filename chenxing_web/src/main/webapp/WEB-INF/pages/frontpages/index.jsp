@@ -169,7 +169,7 @@
       <div class="col-sm-8">
         <c:forEach items="${articleList}" var="item">
           <h2></h2>
-          <div class="fakeimg" style="background-image: url('${item.picurl }')"></div>
+          <div class="fakeimg" style="background-image: url('pic/${item.picurl }')"></div>
           <div class="panel panel-default">
             <div class="panel-body">
               <table class="table" frame="void">
@@ -385,7 +385,7 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" id="localselect">
-                    <li><a onclick="getlocal()">☞定位中☢...</a></li>
+                    <li><a onclick="getlocal()">定位中☢...</a></li>
                   </ul>
                 </div><!-- /btn-group -->
                 <input type="text" class="form-control" id="local" name="location">
@@ -504,14 +504,14 @@
        * 选择权限
        */
       function getquanxian(mes){
-          $("#quanxian").val("👉  "+mes);
+          $("#quanxian").val(mes);
       }
 
       /**
        * 选择位置
        */
       function getlocal(mes){
-          $("#local").val("👉  "+mes);
+          $("#local").val(mes);
       }
 
       /**

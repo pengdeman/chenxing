@@ -44,6 +44,10 @@ public class ArticleController {
         articleBean.setLng(lng);
         articleBean.setLat(lat);
         articleBean.setLocation(location);
+        articleBean.setZfnum(0);
+        articleBean.setPlnum(0);
+        articleBean.setYdnum(0);
+        articleBean.setDznum(0);
         if("公开".equals(show)){
             articleBean.setShows("1");
         }else if("仅自己可见".equals(show)){
@@ -75,7 +79,7 @@ public class ArticleController {
         }
         articleService.insert(articleBean);
         model.addAttribute("messge", "发布成功！");
-        return "frontpages/index";
+        return "redirect:/index";
     }
 
 }

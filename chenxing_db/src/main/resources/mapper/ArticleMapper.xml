@@ -273,7 +273,7 @@
                     from article
                 <include refid="queryWhere"/>
                 <if test="sortColumns != null">
-                    order by #{sortColumns}
+                    order by ${sortColumns}
                 </if>
         </select>
 </mapper>

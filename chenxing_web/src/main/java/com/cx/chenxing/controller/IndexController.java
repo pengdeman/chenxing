@@ -26,6 +26,8 @@ public class IndexController {
     @RequestMapping("/index")
     public String index(Model model) {
         ArticleBean articleQuery = new ArticleBean();
+        articleQuery.setShows("1");
+        articleQuery.setSortColumns("cre_time desc");
         List<ArticleBean> articleList = articleService.query(articleQuery).getResult();
         model.addAttribute("articleList", articleList);
         return "frontpages/index";
