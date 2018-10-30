@@ -86,10 +86,10 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="<%=basePath%>index">主页</a></li>
-          <li><a href="#">足迹</a></li>
+          <li class="active"><a href="<%=basePath%>index">首页</a></li>
+          <li><a href="#">个人中心</a></li>
           <li><a href="#">留言板</a></li>
-          <li><a href="<%=basePath%>personalcenter/index">个人中心</a></li>
+          <li><a href="<%=basePath%>personalcenter/index">个人档</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <c:if test="${user == null}">
