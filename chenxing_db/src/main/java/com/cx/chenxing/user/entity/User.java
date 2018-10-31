@@ -16,11 +16,11 @@ public class User implements java.io.Serializable{
 	private Integer age;//年龄
 	private String sex;//性别
 	private String img;//头像
-	private Date loginTime;//登录时间
-	private Date creTime;//创建时间
+	private String loginTime;//登录时间
+	private String creTime;//创建时间
 	private String activate;//是否激活
 	private String adress;//所在地址
-	private Date birthday;//生日
+	private String birthday;//生日
 	private String signature;//签名
 	private Integer accountLevel;//账号等级
 
@@ -84,16 +84,16 @@ public class User implements java.io.Serializable{
 		public String getImg() {
 			return this.img;
 		}
-		public void setLoginTime(Date value) {
+		public void setLoginTime(String value) {
 			this.loginTime = value;
 		}	
-		public Date getLoginTime() {
+		public String getLoginTime() {
 			return this.loginTime;
 		}
-		public void setCreTime(Date value) {
+		public void setCreTime(String value) {
 			this.creTime = value;
 		}	
-		public Date getCreTime() {
+		public String getCreTime() {
 			return this.creTime;
 		}
 		public void setActivate(String value) {
@@ -108,10 +108,10 @@ public class User implements java.io.Serializable{
 		public String getAdress() {
 			return this.adress;
 		}
-		public void setBirthday(Date value) {
+		public void setBirthday(String value) {
 			this.birthday = value;
 		}	
-		public Date getBirthday() {
+		public String getBirthday() {
 			return this.birthday;
 		}
 		public void setSignature(String value) {

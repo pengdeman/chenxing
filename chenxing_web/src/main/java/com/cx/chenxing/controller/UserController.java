@@ -52,22 +52,22 @@ public class UserController {
         List<UserBean> ulist = userService.query(userBean).getResult();
         if(ulist.size() > 0 && "1".equals(ulist.get(0).getActivate())){
             UserBean loginUser = ulist.get(0);
-//            String logintime = loginUser.getLoginTime().substring(0,9);
-//            if(!logintime.equals(nowtime)){
-//                loginUser.setAccountLevel(loginUser.getAccountLevel()+1);
-//            }
+            String logintime = loginUser.getLoginTime().substring(0,10);
+            if(!logintime.equals(nowtime)){
+                loginUser.setAccountLevel(loginUser.getAccountLevel()+1);
+            }
             loginUser.setLoginTime(sdf.format(new Date()));
             userService.updateSelective(loginUser);
             HttpSession session = request.getSession();//得到当前用户的session，需要先创建一个
             session.setAttribute("user", loginUser);
 
-            return "frontpages/index";
+            return "redirect:/index";
         }else if(ulist.size() > 0 && "0".equals(ulist.get(0).getActivate())){
             model.addAttribute("messge", "您的账号还未激活，请激活后登录！");
-            return "frontpages/index";
+            return "redirect:/index";
         }else{
             model.addAttribute("messge", "密码或登录名错误，请检查后重新输入！");
-            return "frontpages/index";
+            return "redirect:/index";
         }
     }
 
@@ -89,7 +89,7 @@ public class UserController {
         boolean isNum = userName.matches("[0-9]+");//+表示1个搜索或多个（如"3"或"225"），*表示0个或多个（[0-9]*）（如""或"1"或"22"），?表示0个或1个([0-9]?)(如""或"7")
         if(isNum){
             model.addAttribute("messge", "您的大名不能都为数字！");
-            return "location/locationlogin";
+            return "redirect:/index";
         }
         UserQuery uQuery = new UserQuery();
         uQuery.setAccount(mail);
@@ -97,11 +97,11 @@ public class UserController {
         List<User> ls = userService.queryAccount(uQuery);
         if(ls.size()>0){
             model.addAttribute("messge", "昵称或邮箱已存在，请重新输入！");
-            return "frontpages/index";
+            return "redirect:/index";
         }
         if(!CheckMail.checkEmail(mail)){
             model.addAttribute("messge", "邮箱格式有问题，请重新输入！");
-            return "frontpages/index";
+            return "redirect:/index";
         }
         UserBean lg = new UserBean();
         lg.setUserName(userName);
@@ -126,7 +126,7 @@ public class UserController {
         } catch (Exception e) {
             model.addAttribute("messge", "邮箱格式异常，请检查邮箱准确性！");
         }
-        return "frontpages/index";
+        return "redirect:/index";
     }
 
 
@@ -238,7 +238,6 @@ public class UserController {
     public String loginout(HttpServletRequest request){
         HttpSession session = request.getSession();
         session.removeAttribute("user");
-        return "frontpages/index";
+        return "redirect:/index";
     }
-
 }

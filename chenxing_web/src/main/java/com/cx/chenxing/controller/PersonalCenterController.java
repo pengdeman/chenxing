@@ -29,10 +29,16 @@ public class PersonalCenterController {
      * @return
      */
     @RequestMapping("/index")
-    public String index(Model model){
-
-
-
+    public String index(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+        UserBean user= (UserBean) session.getAttribute("user");
+        if(user != null){
+            UserBean users = userService.selectByPrimaryKey(user.getId());
+            model.addAttribute("user", users);
+        }else{
+            model.addAttribute("messge", "登录超时，请重新登陆！");
+            return "redirect:/index";
+        }
         return "frontpages/personalcenter";
     }
 
@@ -57,12 +63,12 @@ public class PersonalCenterController {
                     //判断图片类型
                     if (!Arrays.asList(types).contains(newfileName[0].substring(newfileName[0].lastIndexOf(".")+1).toUpperCase())) {
                         model.addAttribute("messge", "照片格式只支持png、jpg、jpeg、gif！");
-                        return "frontpages/index";
+                        return "redirect:/personalcenter/index";
                     }
                     u.setImg(newfileName[1]);
                 } else {
                     model.addAttribute("messge", "发布信息失败，请上传您的照片！");
-                    return "frontpages/index";
+                    return "redirect:/personalcenter/index";
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -70,9 +76,9 @@ public class PersonalCenterController {
             userService.updateSelective(u);
         }else{
             model.addAttribute("messge", "登录超时，请重新登陆！");
-            return "frontpages/index";
+            return "redirect:/index";
         }
 
-        return "frontpages/personalcenter";
+        return "redirect:/personalcenter/index";
     }
 }

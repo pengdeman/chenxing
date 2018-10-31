@@ -17,6 +17,8 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fileinput.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="layer/mobile/need/layer.css" />
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
@@ -27,6 +29,8 @@
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="js/fileinput.js"></script>
+    <script type="text/javascript" src="layer/mobile/layer.js"></script>
     <style>
       .fakeimg {
         height: 270px;
@@ -80,7 +84,7 @@
     <div class="row">
       <div class="col-sm-4">
         <h2></h2>
-        <div class="fakeimg" style="background-image: url('touxiang.jpg');">
+        <div class="fakeimg" style="background-image: url('pic/${user.img }');">
         </div>
 
         <br>
@@ -111,32 +115,42 @@
           <table class="table">
             <tr>
               <td style=" white-space: nowrap;"><strong>昵称:</strong></td>
-              <td>亿万少女的梦</td>
+              <td>${user.userName }</td>
               <td style=" white-space: nowrap;"><strong>性别:</strong></td>
-              <td>男</td>
+              <td>${user.sex }</td>
             </tr>
             <tr>
               <td style=" white-space: nowrap;"><strong>邮箱:</strong></td>
-              <td>872422345@qq.com</td>
+              <td>${user.mail }</td>
               <td style=" white-space: nowrap;"><strong>年龄:</strong></td>
-              <td>42</td>
+              <td>${user.age }</td>
             </tr>
             <tr>
               <td style=" white-space: nowrap;"><strong>手机:</strong></td>
-              <td>13522556784</td>
+              <td>${user.phone }</td>
               <td style=" white-space: nowrap;"><strong>生日:</strong></td>
-              <td>1992-05-21</td>
+              <td>
+                <fmt:parseDate value="${user.birthday }"
+                               pattern="yyyy-MM-dd HH:mm:ss" var="birthday"></fmt:parseDate>
+                <fmt:formatDate value="${birthday}"
+                                pattern="yyyy-MM-dd"></fmt:formatDate>
+              </td>
             </tr>
             <tr>
               <td style=" white-space: nowrap;"><strong>坐标:</strong></td>
-              <td colspan="3">
-                北京市朝阳区新华金融大厦一层
+              <td>${user.adress }</td>
+              <td style=" white-space: nowrap;"><strong>登录时间:</strong></td>
+              <td>
+                <fmt:parseDate value="${user.loginTime }"
+                               pattern="yyyy-MM-dd HH:mm:ss" var="loginTime"></fmt:parseDate>
+                <fmt:formatDate value="${loginTime}"
+                                pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
               </td>
             </tr>
             <tr>
               <td style=" white-space: nowrap;"><strong>签名:</strong></td>
               <td colspan="3">
-                纸上得来终觉浅，觉知此时要躬行。
+                ${user.signature }
               </td>
             </tr>
           </table>

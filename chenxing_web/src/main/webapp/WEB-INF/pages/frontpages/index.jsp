@@ -107,7 +107,7 @@
     <div class="row">
       <div class="col-sm-4">
         <h2></h2>
-        <div class="fakeimg" style="background-image: url('touxiang.jpg');">
+        <div class="fakeimg" style="background-image: url('pic/${user.img }');">
         </div>
         <div class="panel panel-default">
           <table class="table">
@@ -183,7 +183,12 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="cxtime">${item.creTime }</td>
+                  <td class="cxtime">
+                    <fmt:parseDate value="${item.creTime }"
+                                   pattern="yyyy-MM-dd HH:mm:ss" var="creTime"></fmt:parseDate>
+                    <fmt:formatDate value="${creTime}"
+                                    pattern="yyyy年MM月dd日 HH:mm:ss"></fmt:formatDate>
+                  </td>
                 </tr>
               </table>
               <div class="cxtext">
