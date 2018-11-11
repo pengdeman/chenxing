@@ -180,4 +180,25 @@
                     order by #{sortColumns}
                 </if>
         </select>
+
+    <select id="queryreply" resultType="com.cx.chenxing.articlereply.result.ArticleReplyBean" parameterType="com.cx.chenxing.articlereply.param.ArticleReplyQuery">
+        select
+        ar.id,
+        ar.article_id as articleId,
+        ar.reply_uid as replyUid,
+        ar.reply_time as replyTime,
+        ar.reply_comment as replyComment,
+        ar.reply_pid as replyPid,
+        ar.breply_uid as breplyUid,
+        u.user_name as userName,
+        u.img as img
+        from article_reply ar
+        LEFT JOIN user u ON u.id = ar.reply_uid
+        WHERE
+        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(articleId)">
+            ar.article_id = #{articleId}
+        </if>
+        ORDER BY
+	      ar.reply_time DESC;
+    </select>
 </mapper>

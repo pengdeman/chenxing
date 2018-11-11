@@ -1,7 +1,12 @@
 package com.cx.chenxing.controller;
 
+import com.cx.chenxing.article.ArticleService;
+import com.cx.chenxing.article.param.ArticleQuery;
+import com.cx.chenxing.article.result.ArticleBean;
 import com.cx.chenxing.user.UserService;
 import com.cx.chenxing.user.result.UserBean;
+import com.cx.chenxing.utils.JsonUtil;
+import com.cx.chenxing.utils.MD5Util;
 import com.cx.chenxing.utils.NormalUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +15,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 个人中心相关
@@ -21,7 +32,55 @@ import java.util.Arrays;
 public class PersonalCenterController {
 
     @Resource
+    private ArticleService articleService;
+    @Resource
     private UserService userService;
+
+    /**
+     * 删除文章
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/deletearticle")
+    public void deletearticle(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Map<String, Object> m = new HashMap<>();
+        String id = request.getParameter("id");
+        if(id.length()>0){
+            articleService.delete(Long.parseLong(id));
+            m.put("flag", 1);//删除成功
+        }else{
+            m.put("flag", 2);//删除失败
+        }
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pw = response.getWriter();
+        pw.print(JsonUtil.toJson(m).toString());
+        pw.flush();
+    }
+
+    /**
+     * 个人主页
+     * @return
+     */
+    @RequestMapping("/myselfindex")
+    public String myselfindex(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+        UserBean user= (UserBean) session.getAttribute("user");
+        if(user != null){
+            UserBean users = userService.selectByPrimaryKey(user.getId());
+            model.addAttribute("user", users);
+            ArticleQuery articleQuery = new ArticleQuery();
+            articleQuery.setCreUid(user.getId());
+            articleQuery.setShows("1");
+            articleQuery.setSortColumns("cre_time desc");
+            List<ArticleBean> articleList = articleService.queryarticle(articleQuery).getResult();
+            model.addAttribute("articleList", articleList);
+        }else{
+            model.addAttribute("messge", "登录超时，请重新登陆！");
+            return "redirect:/index";
+        }
+        return "frontpages/myselfindex";
+    }
 
     /**
      * 个人档案首页
@@ -42,6 +101,36 @@ public class PersonalCenterController {
         return "frontpages/personalcenter";
     }
 
+    /**
+     * 修改信息
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("/modifyinfo")
+    public String modifyinfo(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+        UserBean user= (UserBean) session.getAttribute("user");
+        if(user != null){
+            UserBean u = userService.selectByPrimaryKey(user.getId());
+            u.setUserName(request.getParameter("user_name"));
+            u.setAdress(request.getParameter("adress")==""?null:request.getParameter("adress"));
+            u.setSex(request.getParameter("sex")==""?null:request.getParameter("sex"));
+            u.setPhone(request.getParameter("phone")==""?null:request.getParameter("phone"));
+            u.setBirthday(request.getParameter("birthday")==""?null:request.getParameter("birthday"));
+            u.setSignature(request.getParameter("signature")==""?null:request.getParameter("signature"));
+            if(request.getParameter("age") != null && !"".equals(request.getParameter("age"))){
+                u.setAge(Integer.parseInt(request.getParameter("age")));
+            }else{
+                u.setAge(null);
+            }
+            userService.update(u);
+        }else{
+            model.addAttribute("messge", "登录超时，请重新登陆！");
+            return "redirect:/index";
+        }
+        return "redirect:/personalcenter/index";
+    }
 
     /**
      * 修改头像
@@ -81,4 +170,5 @@ public class PersonalCenterController {
 
         return "redirect:/personalcenter/index";
     }
+
 }

@@ -12,6 +12,32 @@ public class ArticleReplyQuery extends PageCondition {
 	private Long replyPid;
 	private Long breplyUid;
 
+	//用户表
+	private String userName;
+	private String img;
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+	private String iszan;//是否已赞
+
+	public String getIszan() {
+		return iszan;
+	}
+
+	public void setIszan(String iszan) {
+		this.iszan = iszan;
+	}
+
+	public void setUserName(String value) {
+		this.userName = value;
+	}
+	public String getUserName() {
+		return this.userName;
+	}
 		public void setId(Long value) {
 			this.id = value;
 		}	

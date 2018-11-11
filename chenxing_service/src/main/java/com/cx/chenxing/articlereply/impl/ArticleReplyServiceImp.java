@@ -9,6 +9,7 @@ import com.cx.chenxing.mybatisutils.Page;
 import com.cx.chenxing.utils.ModelUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class ArticleReplyServiceImp implements ArticleReplyService {
@@ -41,12 +42,16 @@ public class ArticleReplyServiceImp implements ArticleReplyService {
         return articleReplyManager.delete(id);
     }
 
+    @Override
+    public List<ArticleReplyBean> queryreply(ArticleReplyQuery articleReplyQuery) {
+        return articleReplyManager.queryreply(articleReplyQuery);
+    }
+
     public ArticleReplyBean selectByPrimaryKey(long id) {
         return ModelUtil.copyObject(articleReplyManager.selectByPrimaryKey(id), ArticleReplyBean.class);
     }
     
-    public Page<ArticleReplyBean> query(ArticleReplyBean articleReplyBean) {
-        ArticleReplyQuery articleReplyQuery = ModelUtil.copyObject(articleReplyBean, ArticleReplyQuery.class);
+    public Page<ArticleReplyBean> query(ArticleReplyQuery articleReplyQuery) {
         return ModelUtil.copyPage(articleReplyManager.query(articleReplyQuery), ArticleReplyBean.class);
     }
 }

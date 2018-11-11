@@ -45,8 +45,7 @@ public class UserZanServiceImp implements UserZanService {
         return ModelUtil.copyObject(userZanManager.selectByPrimaryKey(id), UserZanBean.class);
     }
     
-    public Page<UserZanBean> query(UserZanBean userZanBean) {
-        UserZanQuery userZanQuery = ModelUtil.copyObject(userZanBean, UserZanQuery.class);
+    public Page<UserZanBean> query(UserZanQuery userZanQuery) {
         return ModelUtil.copyPage(userZanManager.query(userZanQuery), UserZanBean.class);
     }
 }

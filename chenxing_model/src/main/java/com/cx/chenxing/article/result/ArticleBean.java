@@ -18,6 +18,37 @@ public class ArticleBean extends PageCondition {
 	private Integer dznum;
 	private String shows;
 
+	//user表
+	private String userName;
+	private String img;
+	private String iszan;//是否已赞
+
+	public String getIszan() {
+		return iszan;
+	}
+
+	public void setIszan(String iszan) {
+		this.iszan = iszan;
+	}
+
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public String getUserName() {
+
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public void setShows(String value) {
 		this.shows = value;
 	}

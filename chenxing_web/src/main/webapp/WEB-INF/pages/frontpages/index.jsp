@@ -50,7 +50,8 @@
         float: right;
       }
       .cxtouxiang {
-        width: 60px;
+        width: 70px;
+        height: 70px;
         margin-left: -7px;
         border-radius: 50%;
       }
@@ -87,9 +88,16 @@
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li class="active"><a href="<%=basePath%>index">首页</a></li>
-          <li><a href="#">个人中心</a></li>
-          <li><a href="#">留言板</a></li>
-          <li><a href="<%=basePath%>personalcenter/index">个人档</a></li>
+          <c:if test="${user == null}">
+            <li><a href="javascript:alert('登录后才可查看！')">个人中心</a></li>
+            <li><a href="javascript:alert('登录后才可查看！')">留言板</a></li>
+            <li><a href="javascript:alert('登录后才可查看！')">个人档</a></li>
+          </c:if>
+          <c:if test="${user != null}">
+            <li><a href="<%=basePath%>personalcenter/myselfindex">个人中心</a></li>
+            <li><a href="javascript:alert('设计中！')">留言板</a></li>
+            <li><a href="<%=basePath%>personalcenter/index">个人档</a></li>
+          </c:if>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <c:if test="${user == null}">
@@ -107,7 +115,12 @@
     <div class="row">
       <div class="col-sm-4">
         <h2></h2>
-        <div class="fakeimg" style="background-image: url('pic/${user.img }');">
+        <c:if test="${user == null }">
+          <div class="fakeimg" style="background-image: url('wxr.png');">
+        </c:if>
+        <c:if test="${user != null }">
+          <div class="fakeimg" style="background-image: url('pic/${user.img }');">
+        </c:if>
         </div>
         <div class="panel panel-default">
           <table class="table">
@@ -121,11 +134,14 @@
                 <c:if test="${user != null}">
                   <strong>${user.userName}</strong>&nbsp;&nbsp;
                 </c:if>
-                <c:if test="${user.sex == 1}">
-                  <strong>♂</strong>
+                <c:if test="${user.sex eq '男生'}">
+                  <strong style="color: dodgerblue">♂</strong>
                 </c:if>
-                <c:if test="${user.sex == 2}">
-                  <strong>♀</strong>
+                <c:if test="${user.sex eq '女生'}">
+                  <strong style="color: deeppink">♀</strong>
+                </c:if>
+                <c:if test="${user.sex eq '保密'}">
+                  <strong style="color: lawngreen">♀/♂</strong>
                 </c:if>
               </td>
             </tr>
@@ -175,10 +191,10 @@
               <table class="table" frame="void">
                 <tr style="height: 20px;">
                   <td rowspan="2" width="55px;">
-                    <img src="touxiang.jpg" class="cxtouxiang">
+                    <img src="pic/${item.img }" class="cxtouxiang">
                   </td>
                   <td>
-                    <label style="margin-top: 5px;">${item.creUid }</label>&nbsp;&nbsp;<label title="登录365天，皇冠等级">👑</label>
+                    <label style="margin-top: 5px;">${item.userName }</label>&nbsp;&nbsp;<label title="登录365天，皇冠等级">👑</label>
                     <button type="button" class="btn btn-default cxguanzhu">➕关注</button>
                   </td>
                 </tr>
@@ -211,10 +227,10 @@
                 <button type="button" class="btn btn-default bodernone">
                   <span class="glyphicon glyphicon-share-alt"> ${item.zfnum }</span>
                 </button>
-                <button type="button" class="btn btn-default bodernone">
+                <button type="button" class="btn btn-default bodernone" onclick="gotodetail(${item.id })">
                   <span class="glyphicon glyphicon-edit"> ${item.plnum }</span>
                 </button>
-                <button type="button" class="btn btn-default bodernone">
+                <button type="button" class="btn btn-default bodernone" onclick="gotodetail(${item.id })">
                   <span class="glyphicon glyphicon-heart-empty"> ${item.dznum }</span>
                   <!-- <span class="glyphicon glyphicon-heart"></span> 已赞 -->
                 </button>
@@ -413,6 +429,13 @@
   </div><!-- /.modal -->
 
   <script type="text/javascript">
+
+      /**
+       * 进入文章详情
+       */
+      function gotodetail(articleId){
+          window.location.href="<%=basePath%>article/articledetail?id="+articleId;
+      }
 
       /**
        * 获取后台message信息

@@ -21,12 +21,27 @@
                 id,article,cre_time,cre_uid,picurl,location,lng,lat,zfnum,plnum,ydnum,dznum,shows
             ]]>
         </sql>
-         <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+         <select id="selectByPrimaryKey" resultType="com.cx.chenxing.article.entity.Article" parameterType="java.lang.Long">
                 select
-                <include refid="Base_Column_List"/>
-                from article
+                  ac.id ,
+	              ac.article ,
+	              ac.cre_time as creTime,
+	              ac.cre_uid as creUid,
+	              ac.picurl ,
+	              ac.location ,
+	              ac.lng ,
+	              ac.lat ,
+	              ac.zfnum ,
+	              ac.plnum ,
+	              ac.ydnum ,
+	              ac.dznum ,
+	              ac.shows ,
+	              u.user_name as userName,
+	              u.img as img
+                from article ac
+             LEFT JOIN user u ON u.id = ac.cre_uid
                 where
-                        id = #{id} 
+                        ac.id = #{id}
         </select>
         <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
             delete from article
@@ -276,4 +291,45 @@
                     order by ${sortColumns}
                 </if>
         </select>
+
+    <select id="queryarticle" resultType="com.cx.chenxing.article.entity.Article" parameterType="com.cx.chenxing.article.param.ArticleQuery">
+        SELECT
+	      ac.id ,
+	      ac.article ,
+	      ac.cre_time as creTime,
+	      ac.cre_uid as creUid,
+	      ac.picurl ,
+	      ac.location ,
+	      ac.lng ,
+	      ac.lat ,
+	      ac.zfnum ,
+	      ac.plnum ,
+	      ac.ydnum ,
+	      ac.dznum ,
+	      ac.shows ,
+	      u.user_name as userName,
+	      u.img as img
+      FROM
+	      article ac
+      LEFT JOIN user u ON u.id = ac.cre_uid
+      WHERE
+	      ac.shows = 1
+        <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(creUid)">
+            and cre_uid = #{creUid}
+        </if>
+      ORDER BY
+	      ac.cre_time DESC;
+    </select>
+
+        <update id="updateYdNum" parameterType="java.util.List">
+            update article
+          <set>
+              ydnum = ydnum + 1
+          </set>
+        where
+            id in
+            <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+                #{item}
+            </foreach>
+    </update>
 </mapper>

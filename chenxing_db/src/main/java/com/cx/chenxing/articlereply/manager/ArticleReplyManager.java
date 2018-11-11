@@ -3,6 +3,7 @@ package com.cx.chenxing.articlereply.manager;
 import com.cx.chenxing.articlereply.dao.ArticleReplyDao;
 import com.cx.chenxing.articlereply.entity.ArticleReply;
 import com.cx.chenxing.articlereply.param.ArticleReplyQuery;
+import com.cx.chenxing.articlereply.result.ArticleReplyBean;
 import com.cx.chenxing.mybatisutils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,5 +52,9 @@ public class ArticleReplyManager {
         Page<ArticleReply> page = new Page<ArticleReply>(articlereplyQuery);
         page.setResult(list);
         return page;
+    }
+
+    public List<ArticleReplyBean> queryreply(ArticleReplyQuery articleReplyQuery) {
+        return articlereplyDao.queryreply(articleReplyQuery);
     }
 }

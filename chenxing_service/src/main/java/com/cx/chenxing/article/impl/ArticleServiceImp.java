@@ -9,6 +9,7 @@ import com.cx.chenxing.mybatisutils.Page;
 import com.cx.chenxing.utils.ModelUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class ArticleServiceImp implements ArticleService {
@@ -39,6 +40,16 @@ public class ArticleServiceImp implements ArticleService {
 
     public int delete(long id) {
         return articleManager.delete(id);
+    }
+
+    @Override
+    public void updateYdNum(List<Long> articleIds) {
+        articleManager.updateYdNum(articleIds);
+    }
+
+    @Override
+    public Page<ArticleBean> queryarticle(ArticleQuery articleQuery) {
+        return ModelUtil.copyPage(articleManager.queryarticle(articleQuery), ArticleBean.class);
     }
 
     public ArticleBean selectByPrimaryKey(long id) {

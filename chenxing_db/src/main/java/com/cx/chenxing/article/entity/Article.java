@@ -19,6 +19,27 @@ public class Article implements java.io.Serializable{
 	private Integer dznum;
 	private String shows;
 
+	//user表
+	private String userName;
+	private String img;
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public String getUserName() {
+
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public void setShows(String value) {
 		this.shows = value;
 	}

@@ -6,7 +6,7 @@ public class ArticleQuery extends PageCondition {
 	private Long id;
 	private String article;
 	private String creTime;
-	private Integer creUid;
+	private Long creUid;
 	private String picurl;
 	private String location;
 	private String lng;
@@ -16,6 +16,26 @@ public class ArticleQuery extends PageCondition {
 	private Integer ydnum;
 	private Integer dznum;
 	private String shows;
+	//user表
+	private String userName;
+	private String img;
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public String getUserName() {
+
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public void setShows(String value) {
 		this.shows = value;
@@ -41,10 +61,10 @@ public class ArticleQuery extends PageCondition {
 		public String getCreTime() {
 			return this.creTime;
 		}
-		public void setCreUid(Integer value) {
+		public void setCreUid(Long value) {
 			this.creUid = value;
 		}	
-		public Integer getCreUid() {
+		public Long getCreUid() {
 			return this.creUid;
 		}
 		public void setPicurl(String value) {

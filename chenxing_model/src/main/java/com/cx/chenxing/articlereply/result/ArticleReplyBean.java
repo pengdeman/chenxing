@@ -14,11 +14,36 @@ public class ArticleReplyBean extends PageCondition {
 	private Long id;
 	private Long articleId;
 	private Long replyUid;
-	private Date replyTime;
+	private String replyTime;
 	private String replyComment;
 	private Long replyPid;
 	private Long breplyUid;
+	//用户表
+	private String userName;
+	private String img;
+	public String getImg() {
+		return img;
+	}
 
+	public void setImg(String img) {
+		this.img = img;
+	}
+	private String iszan;//是否已赞
+
+	public String getIszan() {
+		return iszan;
+	}
+
+	public void setIszan(String iszan) {
+		this.iszan = iszan;
+	}
+
+	public void setUserName(String value) {
+		this.userName = value;
+	}
+	public String getUserName() {
+		return this.userName;
+	}
 		public void setId(Long value) {
 			this.id = value;
 		}	
@@ -37,10 +62,10 @@ public class ArticleReplyBean extends PageCondition {
 		public Long getReplyUid() {
 			return this.replyUid;
 		}
-		public void setReplyTime(Date value) {
+		public void setReplyTime(String value) {
 			this.replyTime = value;
 		}	
-		public Date getReplyTime() {
+		public String getReplyTime() {
 			return this.replyTime;
 		}
 		public void setReplyComment(String value) {

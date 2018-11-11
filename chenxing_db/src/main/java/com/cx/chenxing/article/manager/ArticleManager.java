@@ -3,6 +3,7 @@ package com.cx.chenxing.article.manager;
 import com.cx.chenxing.article.dao.ArticleDao;
 import com.cx.chenxing.article.entity.Article;
 import com.cx.chenxing.article.param.ArticleQuery;
+import com.cx.chenxing.article.result.ArticleBean;
 import com.cx.chenxing.mybatisutils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,17 @@ public class ArticleManager {
 
     public Page<Article> query(ArticleQuery articleQuery) {
         List<Article> list = articleDao.query(articleQuery);
+        Page<Article> page = new Page<Article>(articleQuery);
+        page.setResult(list);
+        return page;
+    }
+
+    public void updateYdNum(List<Long> articleIds) {
+        articleDao.updateYdNum(articleIds);
+    }
+
+    public Page<Article> queryarticle(ArticleQuery articleQuery) {
+        List<Article> list = articleDao.queryarticle(articleQuery);
         Page<Article> page = new Page<Article>(articleQuery);
         page.setResult(list);
         return page;
