@@ -196,8 +196,8 @@ public class ArticleController {
                 model.addAttribute("messge", "邮箱格式异常，请检查邮箱准确性！");
             }
             m.put("success", 1);
-            ArticleReplyBean ff = articleReplyService.selectByPrimaryKey(articleReplyBean.getId());
-            m.put("footprintReply", ff);
+//            ArticleReplyBean ff = articleReplyService.selectByPrimaryKey(articleReplyBean.getId());
+//            m.put("footprintReply", ff);
         }
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();

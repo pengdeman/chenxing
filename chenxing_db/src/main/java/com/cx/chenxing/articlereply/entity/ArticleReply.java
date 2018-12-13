@@ -8,7 +8,7 @@ public class ArticleReply implements java.io.Serializable{
 	private Long id;
 	private Long articleId;
 	private Long replyUid;
-	private Date replyTime;
+	private String replyTime;
 	private String replyComment;
 	private Long replyPid;
 	private Long breplyUid;
@@ -31,10 +31,10 @@ public class ArticleReply implements java.io.Serializable{
 		public Long getReplyUid() {
 			return this.replyUid;
 		}
-		public void setReplyTime(Date value) {
+		public void setReplyTime(String value) {
 			this.replyTime = value;
 		}	
-		public Date getReplyTime() {
+		public String getReplyTime() {
 			return this.replyTime;
 		}
 		public void setReplyComment(String value) {

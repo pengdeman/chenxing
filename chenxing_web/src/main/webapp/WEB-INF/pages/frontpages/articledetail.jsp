@@ -45,6 +45,10 @@
       @media screen and (max-width:500px){
         .hideline { display:none; }
       }
+      .cxguanzhu {
+        height: 30px;
+        float: right;
+      }
       .cxtouxiang {
         width: 70px;
         height: 70px;
@@ -96,7 +100,7 @@
             <li><a href="javascript:alert('登录后才可查看！')">个人档</a></li>
           </c:if>
           <c:if test="${user != null}">
-            <li class="active"><a href="<%=basePath%>personalcenter/myselfindex">个人中心</a></li>
+            <li><a href="<%=basePath%>personalcenter/myselfindex">个人中心</a></li>
             <li><a href="javascript:alert('设计中！')">留言板</a></li>
             <li><a href="<%=basePath%>personalcenter/index">个人档</a></li>
           </c:if>
@@ -191,6 +195,7 @@
                   </td>
                   <td>
                     <label style="margin-top: 5px;">${article.userName }</label>&nbsp;&nbsp;<label title="登录365天，皇冠等级">👑</label>
+                    <button type="button" class="btn btn-default cxguanzhu" onclick="deletearticle(${item.id })">删除</button>
                   </td>
                 </tr>
                 <tr>
@@ -254,6 +259,7 @@
                   <label style="color:#aaaaaa;">回复了</label>
                   <a href="">东成西就</a>
                 </td>
+                <button type="button" class="btn btn-default cxguanzhu" onclick="deletearticle(${item.id })">删除</button>
               </tr>
             </table>
             <br>
@@ -271,14 +277,14 @@
             </div>
             <div class="btn-group" style="float: right; margin-right: -10px; margin-top: -25px;">
               <button type="button" class="btn btn-default bodernone">
-                <span class="glyphicon glyphicon-edit">0</span>
+                <span class="glyphicon glyphicon-edit"> 0</span>
               </button>
               <button type="button" class="btn btn-default bodernone">
                 <c:if test="${items.iszan == 1 }">
-                  <span class="glyphicon glyphicon-heart">0</span>
+                  <span class="glyphicon glyphicon-heart"> 0</span>
                 </c:if>
                 <c:if test="${items.iszan != 1 }">
-                  <span class="glyphicon glyphicon-heart-empty">0</span>
+                  <span class="glyphicon glyphicon-heart-empty"> 0</span>
                 </c:if>
               </button>
             </div>
