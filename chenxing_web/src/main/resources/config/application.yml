@@ -5,7 +5,7 @@ application:
 spring:
   datasource:
     name: test
-    url: jdbc:mysql://139.199.61.237:3306/chenxing?useSSL=false
+    url: jdbc:mysql://139.199.61.237:3306/chenxing?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: pdm920521
     driver-class-name: com.mysql.jdbc.Driver

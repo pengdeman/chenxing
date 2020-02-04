@@ -15,7 +15,7 @@ public class TomcatConfig {
     @Bean
     public EmbeddedServletContainerFactory embeddedServletContainerFactory() {
         ConfigurableEmbeddedServletContainer factory = new TomcatEmbeddedServletContainerFactory();
-        factory.setDocumentRoot(new File("/Users/mc962/Documents/project_space/ideacx/chenxing_web/src/main/webapp/"));
+        factory.setDocumentRoot(new File("/Users/pengdeman/Documents/git-project/chenxing/chenxing_web/src/main/webapp/"));
         return (EmbeddedServletContainerFactory) factory;
     }
 }
