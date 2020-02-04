@@ -78,7 +78,7 @@ public class PersonalCenterController {
             model.addAttribute("messge", message);
         }else{
             attributes.addAttribute("messge", "登录超时，请重新登陆！");
-            return "redirect:/index";
+            return "redirect:/";
         }
         return "frontpages/personalcenter";
     }
@@ -109,7 +109,7 @@ public class PersonalCenterController {
             userService.update(u);
         }else{
             attributes.addAttribute("messge", "登录超时，请重新登陆！");
-            return "redirect:/index";
+            return "redirect:/";
         }
         return "redirect:/personalcenter/index";
     }
@@ -147,7 +147,7 @@ public class PersonalCenterController {
             userService.updateSelective(u);
         }else{
             attributes.addAttribute("messge", "登录超时，请重新登陆！");
-            return "redirect:/index";
+            return "redirect:/";
         }
 
         return "redirect:/personalcenter/index";

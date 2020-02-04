@@ -61,13 +61,13 @@ public class UserController {
             userService.updateSelective(loginUser);
             HttpSession session = request.getSession();//得到当前用户的session，需要先创建一个
             session.setAttribute("user", loginUser);
-            return "redirect:/index";
+            return "redirect:/";
         }else if(ulist.size() > 0 && "0".equals(ulist.get(0).getActivate())){
             attributes.addAttribute("messge", "您的账号还未激活，请激活后登录！");
-            return "redirect:/index";
+            return "redirect:/";
         }else{
             attributes.addAttribute("messge", "密码或登录名错误，请检查后重新输入！");
-            return "redirect:/index";
+            return "redirect:/";
         }
     }
 
@@ -89,7 +89,7 @@ public class UserController {
         boolean isNum = userName.matches("[0-9]+");//+表示1个搜索或多个（如"3"或"225"），*表示0个或多个（[0-9]*）（如""或"1"或"22"），?表示0个或1个([0-9]?)(如""或"7")
         if(isNum){
             attributes.addAttribute("messge", "您的大名不能都为数字！");
-            return "redirect:/index";
+            return "redirect:/";
         }
         UserQuery uQuery = new UserQuery();
         uQuery.setMail(mail);
@@ -97,11 +97,11 @@ public class UserController {
         List<User> ls = userService.queryAccount(uQuery);
         if(ls.size()>0){
             attributes.addAttribute("messge", "昵称或邮箱已存在，请重新输入！");
-            return "redirect:/index";
+            return "redirect:/";
         }
         if(!CheckMail.checkEmail(mail)){
             attributes.addAttribute("messge", "邮箱格式有问题，请重新输入！");
-            return "redirect:/index";
+            return "redirect:/";
         }
         UserBean lg = new UserBean();
         lg.setUserName(userName);
@@ -126,7 +126,7 @@ public class UserController {
         } catch (Exception e) {
             attributes.addAttribute("messge", "邮箱格式异常，请检查邮箱准确性！");
         }
-        return "redirect:/index";
+        return "redirect:/";
     }
 
 
@@ -237,6 +237,6 @@ public class UserController {
     public String loginout(HttpServletRequest request){
         HttpSession session = request.getSession();
         session.removeAttribute("user");
-        return "redirect:/index";
+        return "redirect:/";
     }
 }

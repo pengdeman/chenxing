@@ -78,7 +78,7 @@ public class ArticleController {
             articleBean.setCreUid(user.getId());
         }else{
             attributes.addAttribute("messge", "登录超时，请重新登陆！");
-            return "redirect:/index";
+            return "redirect:/";
         }
         String[] types = {"JPG", "PNG", "JPEG", "GIF", "JEPG"};
         try {
@@ -87,20 +87,20 @@ public class ArticleController {
                 //判断图片类型
                 if (!Arrays.asList(types).contains(newfileName[0].substring(newfileName[0].lastIndexOf(".")+1).toUpperCase())) {
                     attributes.addAttribute("messge", "照片格式只支持png、jpg、jpeg、gif！");
-                    return "redirect:/index";
+                    return "redirect:/";
                 }
                 articleBean.setPicurl(newfileName[1]);
                 //articleBean.setPictruename(newfileName[0]);
             } else {
                 attributes.addAttribute("messge", "发布信息失败，请上传您的照片！");
-                return "redirect:/index";
+                return "redirect:/";
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         articleService.insert(articleBean);
         attributes.addAttribute("messge", "发布成功！");
-        return "redirect:/index";
+        return "redirect:/";
     }
 
     /**
@@ -239,7 +239,7 @@ public class ArticleController {
         String id = request.getParameter("id");
         articleService.delete(Long.parseLong(id));
         articleReplyService.deleteByArticleId(Long.parseLong(id));
-        return "redirect:/index";
+        return "redirect:/";
     }
 
     /**

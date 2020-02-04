@@ -38,8 +38,8 @@ public class IndexController {
      * 系统首页
      * @return
      */
-    @RequestMapping("/index")
-    public String index(@ModelAttribute("messge") String message, HttpServletRequest request, Model model) {
+    @RequestMapping("/")
+    public String systemin(@ModelAttribute("messge") String message, HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         UserBean user= (UserBean) session.getAttribute("user");
         ArticleQuery articleQuery = new ArticleQuery();
