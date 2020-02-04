@@ -10,8 +10,10 @@ import com.cx.chenxing.utils.MD5Util;
 import com.cx.chenxing.utils.NormalUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +56,7 @@ public class PersonalCenterController {
         }
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
-        pw.print(JsonUtil.toJson(m).toString());
+        pw.print(JsonUtil.toJson(m));
         pw.flush();
     }
 
@@ -63,7 +65,7 @@ public class PersonalCenterController {
      * @return
      */
     @RequestMapping("/myselfindex")
-    public String myselfindex(HttpServletRequest request, Model model){
+    public String myselfindex(HttpServletRequest request, Model model, RedirectAttributes attributes){
         HttpSession session = request.getSession();
         UserBean user= (UserBean) session.getAttribute("user");
         if(user != null){
@@ -76,7 +78,7 @@ public class PersonalCenterController {
             List<ArticleBean> articleList = articleService.queryarticle(articleQuery).getResult();
             model.addAttribute("articleList", articleList);
         }else{
-            model.addAttribute("messge", "登录超时，请重新登陆！");
+            attributes.addAttribute("messge", "登录超时，请重新登陆！");
             return "redirect:/index";
         }
         return "frontpages/myselfindex";
@@ -88,14 +90,16 @@ public class PersonalCenterController {
      * @return
      */
     @RequestMapping("/index")
-    public String index(HttpServletRequest request, Model model){
+    public String index(@ModelAttribute("messge") String message, HttpServletRequest request,
+                        Model model, RedirectAttributes attributes){
         HttpSession session = request.getSession();
         UserBean user= (UserBean) session.getAttribute("user");
         if(user != null){
             UserBean users = userService.selectByPrimaryKey(user.getId());
             model.addAttribute("user", users);
+            model.addAttribute("messge", message);
         }else{
-            model.addAttribute("messge", "登录超时，请重新登陆！");
+            attributes.addAttribute("messge", "登录超时，请重新登陆！");
             return "redirect:/index";
         }
         return "frontpages/personalcenter";
@@ -104,11 +108,11 @@ public class PersonalCenterController {
     /**
      * 修改信息
      * @param request
-     * @param model
+     * @param attributes
      * @return
      */
     @RequestMapping("/modifyinfo")
-    public String modifyinfo(HttpServletRequest request, Model model){
+    public String modifyinfo(HttpServletRequest request, RedirectAttributes attributes){
         HttpSession session = request.getSession();
         UserBean user= (UserBean) session.getAttribute("user");
         if(user != null){
@@ -126,7 +130,7 @@ public class PersonalCenterController {
             }
             userService.update(u);
         }else{
-            model.addAttribute("messge", "登录超时，请重新登陆！");
+            attributes.addAttribute("messge", "登录超时，请重新登陆！");
             return "redirect:/index";
         }
         return "redirect:/personalcenter/index";
@@ -135,11 +139,11 @@ public class PersonalCenterController {
     /**
      * 修改头像
      * @param request
-     * @param model
+     * @param attributes
      * @return
      */
     @RequestMapping("/modifypic")
-    public String modifyPic(HttpServletRequest request, Model model){
+    public String modifyPic(HttpServletRequest request, RedirectAttributes attributes){
         MultipartHttpServletRequest reques = (MultipartHttpServletRequest) request;
         HttpSession session = request.getSession();
         UserBean user= (UserBean) session.getAttribute("user");
@@ -151,12 +155,12 @@ public class PersonalCenterController {
                 if (newfileName != null) {
                     //判断图片类型
                     if (!Arrays.asList(types).contains(newfileName[0].substring(newfileName[0].lastIndexOf(".")+1).toUpperCase())) {
-                        model.addAttribute("messge", "照片格式只支持png、jpg、jpeg、gif！");
+                        attributes.addAttribute("messge", "照片格式只支持png、jpg、jpeg、gif！");
                         return "redirect:/personalcenter/index";
                     }
                     u.setImg(newfileName[1]);
                 } else {
-                    model.addAttribute("messge", "发布信息失败，请上传您的照片！");
+                    attributes.addAttribute("messge", "发布信息失败，请上传您的照片！");
                     return "redirect:/personalcenter/index";
                 }
             } catch (Exception e) {
@@ -164,7 +168,7 @@ public class PersonalCenterController {
             }
             userService.updateSelective(u);
         }else{
-            model.addAttribute("messge", "登录超时，请重新登陆！");
+            attributes.addAttribute("messge", "登录超时，请重新登陆！");
             return "redirect:/index";
         }
 

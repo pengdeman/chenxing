@@ -7,6 +7,7 @@ import com.cx.chenxing.user.UserService;
 import com.cx.chenxing.user.result.UserBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/index")
-    public String index(HttpServletRequest request, Model model) {
+    public String index(@ModelAttribute("messge") String message, HttpServletRequest request, Model model) {
         ArticleQuery articleQuery = new ArticleQuery();
         List<ArticleBean> articleList = articleService.queryarticle(articleQuery).getResult();
         //更新阅读数------
@@ -42,6 +43,7 @@ public class IndexController {
         articleService.updateYdNum(articleIds);
         //更新阅读数------end
         model.addAttribute("articleList", articleList);
+        model.addAttribute("messge", message);
         HttpSession session = request.getSession();
         UserBean user= (UserBean) session.getAttribute("user");
         if(user != null){

@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.cx.chenxing.user.UserService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -35,12 +37,11 @@ public class UserController {
     /**
      * 用户登录
      * @param request
-     * @param response
-     * @param model
+     * @param attributes
      * @return
      */
     @RequestMapping("/locationsign")
-    public String locationsign(HttpServletRequest request, HttpServletResponse response, Model model){
+    public String locationsign(HttpServletRequest request, RedirectAttributes attributes){
         SimpleDateFormat sdfs = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String nowtime = sdfs.format(new Date());
@@ -60,13 +61,12 @@ public class UserController {
             userService.updateSelective(loginUser);
             HttpSession session = request.getSession();//得到当前用户的session，需要先创建一个
             session.setAttribute("user", loginUser);
-
             return "redirect:/index";
         }else if(ulist.size() > 0 && "0".equals(ulist.get(0).getActivate())){
-            model.addAttribute("messge", "您的账号还未激活，请激活后登录！");
+            attributes.addAttribute("messge", "您的账号还未激活，请激活后登录！");
             return "redirect:/index";
         }else{
-            model.addAttribute("messge", "密码或登录名错误，请检查后重新输入！");
+            attributes.addAttribute("messge", "密码或登录名错误，请检查后重新输入！");
             return "redirect:/index";
         }
     }
@@ -75,12 +75,12 @@ public class UserController {
     /**
      * 用户注册
      * @param request
-     * @param model
+     * @param attributes
      * @return
      */
     @RequestMapping("/locationreg")
     @Transactional(rollbackFor = Exception.class)
-    public String locationreg(HttpServletRequest request, Model model){
+    public String locationreg(HttpServletRequest request, RedirectAttributes attributes){
         String url = GetBaseUrl.geturl(request);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String userName = request.getParameter("signup_name");//昵称
@@ -88,19 +88,19 @@ public class UserController {
         String password = request.getParameter("signup_password");//密码
         boolean isNum = userName.matches("[0-9]+");//+表示1个搜索或多个（如"3"或"225"），*表示0个或多个（[0-9]*）（如""或"1"或"22"），?表示0个或1个([0-9]?)(如""或"7")
         if(isNum){
-            model.addAttribute("messge", "您的大名不能都为数字！");
+            attributes.addAttribute("messge", "您的大名不能都为数字！");
             return "redirect:/index";
         }
         UserQuery uQuery = new UserQuery();
-        uQuery.setAccount(mail);
-        uQuery.setMail(userName);
+        uQuery.setMail(mail);
+        uQuery.setUserName(userName);
         List<User> ls = userService.queryAccount(uQuery);
         if(ls.size()>0){
-            model.addAttribute("messge", "昵称或邮箱已存在，请重新输入！");
+            attributes.addAttribute("messge", "昵称或邮箱已存在，请重新输入！");
             return "redirect:/index";
         }
         if(!CheckMail.checkEmail(mail)){
-            model.addAttribute("messge", "邮箱格式有问题，请重新输入！");
+            attributes.addAttribute("messge", "邮箱格式有问题，请重新输入！");
             return "redirect:/index";
         }
         UserBean lg = new UserBean();
@@ -122,9 +122,9 @@ public class UserController {
             String[] toUser = new String[]{mail};
             MailUtil se = new MailUtil(mailHost, sender_username, sender_password, false);
             se.doSendHtmlEmail("恭喜您！辰星上的家已经搭建完成啦！", "［辰星］<div>亲爱的辰星家人-"+userName+"，您好！恭喜您辰星账号已注册成功！<a href='"+url+"user/locationactivate?mail="+mail+"'>请点击</a>激活该账号！</div>", toUser, null);
-            model.addAttribute("messge", "注册成功！请登录注册邮箱激活账号！(注：如未收到邮件，可能被识别为垃圾邮件了，请到邮箱垃圾箱中查看，并设置为这不是垃圾邮件！)");
+            attributes.addAttribute("messge", "注册成功！请登录注册邮箱激活账号！(注：如未收到邮件，可能被识别为垃圾邮件了，请到邮箱垃圾箱中查看，并设置为这不是垃圾邮件！)");
         } catch (Exception e) {
-            model.addAttribute("messge", "邮箱格式异常，请检查邮箱准确性！");
+            attributes.addAttribute("messge", "邮箱格式异常，请检查邮箱准确性！");
         }
         return "redirect:/index";
     }
@@ -133,11 +133,10 @@ public class UserController {
     /**
      * 激活账号
      * @param request
-     * @param model
      * @return
      */
     @RequestMapping("/locationactivate")
-    public String locationactivate(HttpServletRequest request,Model model) throws Exception {
+    public String locationactivate(HttpServletRequest request) throws Exception {
         String mail = request.getParameter("mail");
         UserQuery uQuery = new UserQuery();
         uQuery.setAccount(mail);
@@ -189,7 +188,7 @@ public class UserController {
         }
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
-        pw.print(JsonUtil.toJson(m).toString());
+        pw.print(JsonUtil.toJson(m));
         pw.flush();
     }
 
@@ -225,7 +224,7 @@ public class UserController {
         }
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
-        pw.print(JsonUtil.toJson(m).toString());
+        pw.print(JsonUtil.toJson(m));
         pw.flush();
     }
 

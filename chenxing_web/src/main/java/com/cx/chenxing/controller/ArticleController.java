@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +45,7 @@ public class ArticleController {
 
 
     @RequestMapping("/submitarticle")
-    public String submitArticle(HttpServletRequest request, Model model){
+    public String submitArticle(HttpServletRequest request, RedirectAttributes attributes){
         MultipartHttpServletRequest reques = (MultipartHttpServletRequest) request;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String article = request.getParameter("article");//文字
@@ -71,8 +73,8 @@ public class ArticleController {
         if(user != null){
             articleBean.setCreUid(user.getId());
         }else{
-            model.addAttribute("messge", "登录超时，请重新登陆！");
-            return "frontpages/index";
+            attributes.addAttribute("messge", "登录超时，请重新登陆！");
+            return "redirect:/index";
         }
         String[] types = {"JPG", "PNG", "JPEG", "GIF", "JEPG"};
         try {
@@ -80,20 +82,20 @@ public class ArticleController {
             if (newfileName != null) {
                 //判断图片类型
                 if (!Arrays.asList(types).contains(newfileName[0].substring(newfileName[0].lastIndexOf(".")+1).toUpperCase())) {
-                    model.addAttribute("messge", "照片格式只支持png、jpg、jpeg、gif！");
-                    return "frontpages/index";
+                    attributes.addAttribute("messge", "照片格式只支持png、jpg、jpeg、gif！");
+                    return "redirect:/index";
                 }
                 articleBean.setPicurl(newfileName[1]);
                 //articleBean.setPictruename(newfileName[0]);
             } else {
-                model.addAttribute("messge", "发布信息失败，请上传您的照片！");
-                return "frontpages/index";
+                attributes.addAttribute("messge", "发布信息失败，请上传您的照片！");
+                return "redirect:/index";
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         articleService.insert(articleBean);
-        model.addAttribute("messge", "发布成功！");
+        attributes.addAttribute("messge", "发布成功！");
         return "redirect:/index";
     }
 
@@ -156,7 +158,7 @@ public class ArticleController {
      * @throws IOException
      */
     @RequestMapping("/ajaxSaveReply")
-    public String ajaxSaveReply(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+    public void ajaxSaveReply(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         String url = GetSysUrlUtil.geturl(request);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Map<String, Object> m = new HashMap<>();
@@ -196,14 +198,11 @@ public class ArticleController {
                 model.addAttribute("messge", "邮箱格式异常，请检查邮箱准确性！");
             }
             m.put("success", 1);
-//            ArticleReplyBean ff = articleReplyService.selectByPrimaryKey(articleReplyBean.getId());
-//            m.put("footprintReply", ff);
         }
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
-        pw.print(JsonUtil.toJson(m).toString());
+        pw.print(JsonUtil.toJson(m));
         pw.flush();
-        return null;
     }
 
 }

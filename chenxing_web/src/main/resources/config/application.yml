@@ -3,6 +3,10 @@ server:
 application:
   name: chenxing
 spring:
+  http:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
   datasource:
     name: test
     url: jdbc:mysql://139.199.61.237:3306/chenxing?useSSL=false&useUnicode=true&characterEncoding=UTF-8
