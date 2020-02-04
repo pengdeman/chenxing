@@ -5,15 +5,15 @@ import com.cx.chenxing.articlereply.entity.ArticleReply;
 import com.cx.chenxing.articlereply.param.ArticleReplyQuery;
 import com.cx.chenxing.articlereply.result.ArticleReplyBean;
 import com.cx.chenxing.mybatisutils.Page;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class ArticleReplyManager {
-    @Autowired
+
+    @Resource
     private ArticleReplyDao articlereplyDao;
 
     @Transactional
@@ -56,5 +56,9 @@ public class ArticleReplyManager {
 
     public List<ArticleReplyBean> queryreply(ArticleReplyQuery articleReplyQuery) {
         return articlereplyDao.queryreply(articleReplyQuery);
+    }
+
+    public void deleteByArticleId(long id) {
+        articlereplyDao.deleteByArticleId(id);
     }
 }

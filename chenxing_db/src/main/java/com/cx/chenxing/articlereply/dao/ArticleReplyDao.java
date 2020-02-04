@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface ArticleReplyDao extends BaseDao<ArticleReply,ArticleReplyQuery,Integer> {
     public List<ArticleReplyBean> queryreply(ArticleReplyQuery articleReplyQuery);
+
+    void deleteByArticleId(long id);
 }

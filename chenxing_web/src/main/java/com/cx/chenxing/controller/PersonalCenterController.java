@@ -39,28 +39,6 @@ public class PersonalCenterController {
     private UserService userService;
 
     /**
-     * 删除文章
-     * @param request
-     * @param response
-     * @throws IOException
-     */
-    @RequestMapping("/deletearticle")
-    public void deletearticle(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Map<String, Object> m = new HashMap<>();
-        String id = request.getParameter("id");
-        if(id.length()>0){
-            articleService.delete(Long.parseLong(id));
-            m.put("flag", 1);//删除成功
-        }else{
-            m.put("flag", 2);//删除失败
-        }
-        response.setCharacterEncoding("utf-8");
-        PrintWriter pw = response.getWriter();
-        pw.print(JsonUtil.toJson(m));
-        pw.flush();
-    }
-
-    /**
      * 个人主页
      * @return
      */

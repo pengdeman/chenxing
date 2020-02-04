@@ -5,6 +5,8 @@ import com.cx.chenxing.article.result.ArticleBean;
 import com.cx.chenxing.articlereply.ArticleReplyService;
 import com.cx.chenxing.articlereply.param.ArticleReplyQuery;
 import com.cx.chenxing.articlereply.result.ArticleReplyBean;
+import com.cx.chenxing.mybatisutils.Page;
+import com.cx.chenxing.user.UserService;
 import com.cx.chenxing.user.result.UserBean;
 import com.cx.chenxing.userzan.UserZanService;
 import com.cx.chenxing.userzan.param.UserZanQuery;
@@ -42,6 +44,8 @@ public class ArticleController {
     private ArticleReplyService articleReplyService;
     @Resource
     private UserZanService userZanService;
+    @Resource
+    private UserService userService;
 
 
     @RequestMapping("/submitarticle")
@@ -141,6 +145,16 @@ public class ArticleController {
                 }else{
                     articleReplyList.get(i).setIszan("0");
                 }
+                UserBean replyUser = userService.selectByPrimaryKey(articleReplyList.get(i).getReplyUid());
+                UserBean breplyUser = userService.selectByPrimaryKey(articleReplyList.get(i).getBreplyUid());
+                if(Objects.nonNull(replyUser)){
+                    articleReplyList.get(i).setReplyUname(replyUser.getUserName());
+                    articleReplyList.get(i).setReplyImg(replyUser.getImg());
+                }
+                if(Objects.nonNull(breplyUser)){
+                    articleReplyList.get(i).setBreplyUname(breplyUser.getUserName());
+                    articleReplyList.get(i).setBreplyImg(breplyUser.getImg());
+                }
             }
         }
         model.addAttribute("article", article);
@@ -158,7 +172,7 @@ public class ArticleController {
      * @throws IOException
      */
     @RequestMapping("/ajaxSaveReply")
-    public void ajaxSaveReply(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+    public String ajaxSaveReply(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         String url = GetSysUrlUtil.geturl(request);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Map<String, Object> m = new HashMap<>();
@@ -176,7 +190,7 @@ public class ArticleController {
             articleReplyBean.setBreplyUid(Long.parseLong(breplyId));
             articleReplyBean.setReplyTime(sdf.format(new Date()));
             articleReplyBean.setReplyComment(replyContent);
-            articleReplyBean.setReplyPid(0L);
+            articleReplyBean.setReplyPid(0L);//点赞数
             articleReplyService.insert(articleReplyBean);
 
             ArticleBean articleBean = articleService.selectByPrimaryKey(Long.parseLong(articleId));
@@ -198,6 +212,137 @@ public class ArticleController {
                 model.addAttribute("messge", "邮箱格式异常，请检查邮箱准确性！");
             }
             m.put("success", 1);
+            ArticleReplyBean ff = articleReplyService.selectByPrimaryKey(articleReplyBean.getId());
+            UserBean replyUser = userService.selectByPrimaryKey(ff.getReplyUid());
+            UserBean breplyUser = userService.selectByPrimaryKey(ff.getBreplyUid());
+            ff.setReplyUname(replyUser.getUserName());
+            ff.setReplyImg(replyUser.getImg());
+            ff.setBreplyUname(breplyUser.getUserName());
+            ff.setBreplyImg(breplyUser.getImg());
+            m.put("articleReply", ff);
+        }
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pw = response.getWriter();
+        pw.print(JsonUtil.toJson(m));
+        pw.flush();
+        return null;
+    }
+
+    /**
+     * 删除文章
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/deletearticle")
+    public String deletearticle(HttpServletRequest request, HttpServletResponse response){
+        String id = request.getParameter("id");
+        articleService.delete(Long.parseLong(id));
+        articleReplyService.deleteByArticleId(Long.parseLong(id));
+        return "redirect:/index";
+    }
+
+    /**
+     * 删除文章评论
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/deletearticlepl")
+    public void deletearticlepl(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Map<String, Object> m = new HashMap<>();
+        String id = request.getParameter("id");
+        String articleId = request.getParameter("articleId");
+        if(id.length() > 0 && articleId.length() > 0){
+            ArticleBean articleBean = articleService.selectByPrimaryKey(Long.parseLong(articleId));
+            articleBean.setPlnum(articleBean.getPlnum()-1);
+            articleService.updateSelective(articleBean);
+            articleReplyService.delete(Long.parseLong(id));
+            m.put("flag", 1);//删除成功
+        }else{
+            m.put("flag", 2);//删除失败
+        }
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pw = response.getWriter();
+        pw.print(JsonUtil.toJson(m));
+        pw.flush();
+    }
+
+    /**
+     * 评论点赞
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/zans")
+    public void zans(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Map<String, Object> m = new HashMap<>();
+        HttpSession session = request.getSession();
+        UserBean user= (UserBean) session.getAttribute("user");
+        if(user == null){
+            m.put("num", 20000000);
+        }else{
+            String id = request.getParameter("id");
+
+            UserZanQuery userZanQuery = new UserZanQuery();
+            userZanQuery.setZanUid(user.getId());
+            userZanQuery.setZanArticleRid(Long.parseLong(id));
+            Page<UserZanBean> uzan = userZanService.query(userZanQuery);
+            if(uzan.getResult().size() > 0){
+                m.put("num", 10000000);
+            }else{
+                UserZanBean userZanBean = new UserZanBean();
+                userZanBean.setZanUid(user.getId());
+                userZanBean.setZanArticleRid(Long.parseLong(id));
+                userZanBean.setZanTime(new Date());
+                userZanService.insert(userZanBean);
+
+                ArticleReplyBean articleReplyBean = articleReplyService.selectByPrimaryKey(Integer.parseInt(id));
+                articleReplyBean.setReplyPid(articleReplyBean.getReplyPid()+1);
+                articleReplyService.updateSelective(articleReplyBean);
+                m.put("num", articleReplyBean.getReplyPid());
+            }
+        }
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pw = response.getWriter();
+        pw.print(JsonUtil.toJson(m));
+        pw.flush();
+    }
+
+    /**
+     * 文章点赞
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/zan")
+    public void zan(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Map<String, Object> m = new HashMap<>();
+        HttpSession session = request.getSession();
+        UserBean user= (UserBean) session.getAttribute("user");
+        if(user == null){
+            m.put("num", 20000000);
+        }else{
+            String id = request.getParameter("id");
+
+            UserZanQuery userZanQuery = new UserZanQuery();
+            userZanQuery.setZanUid(user.getId());
+            userZanQuery.setZanArticleId(Long.parseLong(id));
+            Page<UserZanBean> uzanlist = userZanService.query(userZanQuery);
+            if(uzanlist.getResult().size() > 0){
+                m.put("num", 10000000);
+            }else{
+                UserZanBean userZanBean = new UserZanBean();
+                userZanBean.setZanUid(user.getId());
+                userZanBean.setZanArticleId(Long.parseLong(id));
+                userZanBean.setZanTime(new Date());
+                userZanService.insert(userZanBean);
+
+                ArticleBean articleBean = articleService.selectByPrimaryKey(Long.parseLong(id));
+                articleBean.setDznum(articleBean.getDznum()+1);
+                articleService.updateSelective(articleBean);
+                m.put("num", articleBean.getDznum());
+            }
         }
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();

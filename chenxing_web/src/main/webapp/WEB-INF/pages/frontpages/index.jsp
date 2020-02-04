@@ -83,7 +83,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">辰星🌟</a>
+        <a class="navbar-brand" href="<%=basePath%>index">辰星🌟</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
@@ -230,9 +230,13 @@
                 <button type="button" class="btn btn-default bodernone" onclick="gotodetail(${item.id })">
                   <span class="glyphicon glyphicon-edit"> ${item.plnum }</span>
                 </button>
-                <button type="button" class="btn btn-default bodernone" onclick="gotodetail(${item.id })">
-                  <span class="glyphicon glyphicon-heart-empty"> ${item.dznum }</span>
-                  <!-- <span class="glyphicon glyphicon-heart"></span> 已赞 -->
+                <button id="zanid" type="button" class="btn btn-default bodernone" onclick="zan(${item.id })">
+                  <c:if test="${item.iszan == 1 }">
+                    <span style="color: red;" class="glyphicon glyphicon-heart"> ${item.dznum }</span>
+                  </c:if>
+                  <c:if test="${item.iszan != 1 }">
+                    <span class="glyphicon glyphicon-heart-empty"> ${item.dznum }</span>
+                  </c:if>
                 </button>
               </div>
             </div>
@@ -429,6 +433,35 @@
   </div><!-- /.modal -->
 
   <script type="text/javascript">
+
+      /**
+       * 文章赞
+       */
+      function zan(id){
+          var zanid = "zanid";
+          $.ajax({
+              cache:true,
+              type:"POST",
+              url:"<%=basePath%>/article/zan",
+              data:{id: id},
+              async:false,
+              error:function(request){
+                  alert("Connection error");
+              },
+              success:function(data){
+                  var jsonObj=eval("("+data+")");
+                  if(jsonObj.num == 10000000){
+                      alert("您已点过赞了！");
+                  }else if(jsonObj.num == 20000000){
+                      alert("请您先登录再点赞！");
+                  }else{
+                      document.getElementById(zanid).innerHTML = "<span style=\"color: red;\" class=\"glyphicon glyphicon-heart\"> "+jsonObj.num+"</span>";
+                      alert("点赞成功！");
+                  }
+              }
+          });
+      }
+
 
       /**
        * 进入文章详情

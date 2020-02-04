@@ -89,7 +89,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">辰星🌟</a>
+        <a class="navbar-brand" href="<%=basePath%>index">辰星🌟</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
@@ -195,7 +195,9 @@
                   </td>
                   <td>
                     <label style="margin-top: 5px;">${article.userName }</label>&nbsp;&nbsp;<label title="登录365天，皇冠等级">👑</label>
-                    <button type="button" class="btn btn-default cxguanzhu" onclick="deletearticle(${item.id })">删除</button>
+                    <c:if test="${article.creUid == user.id}">
+                      <button type="button" class="btn btn-default cxguanzhu" onclick="deletearticle(${article.id })">删除</button>
+                    </c:if>
                   </td>
                 </tr>
                 <tr>
@@ -230,9 +232,9 @@
                 <button type="button" class="btn btn-default bodernone" data-toggle="modal" data-target="#pingModal" onclick="fz(${article.id }, ${article.creUid })">
                   <span class="glyphicon glyphicon-edit"> ${article.plnum }</span>
                 </button>
-                <button type="button" class="btn btn-default bodernone">
+                <button id="zanid" type="button" class="btn btn-default bodernone" onclick="zan(${article.id })">
                   <c:if test="${article.iszan == 1 }">
-                    <span class="glyphicon glyphicon-heart"> ${article.dznum }</span>
+                    <span style="color: red;" class="glyphicon glyphicon-heart"> ${article.dznum }</span>
                   </c:if>
                   <c:if test="${article.iszan != 1 }">
                     <span class="glyphicon glyphicon-heart-empty"> ${article.dznum }</span>
@@ -241,25 +243,27 @@
               </div>
             </div>
           </div>
-
+        <div id="plzj"><!-- 评论最外层 用于追加评论 -->
         <c:forEach items="${articleReplyList}" var="items" varStatus="vas">
         <!-- 回复区域开始 -->
-        <div class="panel panel-default">
+        <div class="panel panel-default" id="deleteid${items.id }">
           <div class="panel-body">
             <table>
               <tr style="height: 10px;">
                 <td rowspan="2" width="30px;">
-                  <img src="pic/${items.img }" class="cxhftouxiang">
+                  <img src="pic/${items.replyImg }" class="cxhftouxiang">
                 </td>
               </tr>
               <tr>
                 <td style="font-size: 12px;">
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <a href="">英俊侠客</a>
+                  <a href="">${items.replyUname}</a>
                   <label style="color:#aaaaaa;">回复了</label>
-                  <a href="">东成西就</a>
+                  <a href="">${items.breplyUname}</a>
                 </td>
-                <button type="button" class="btn btn-default cxguanzhu" onclick="deletearticle(${item.id })">删除</button>
+                <c:if test="${items.replyUid == user.id}">
+                  <button type="button" class="btn btn-default cxguanzhu" onclick="deletearticlepl(${items.id }, ${items.articleId })">删除</button>
+                </c:if>
               </tr>
             </table>
             <br>
@@ -276,15 +280,15 @@
                               pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
             </div>
             <div class="btn-group" style="float: right; margin-right: -10px; margin-top: -25px;">
-              <button type="button" class="btn btn-default bodernone">
-                <span class="glyphicon glyphicon-edit"> 0</span>
+              <button type="button" class="btn btn-default bodernone" data-toggle="modal" data-target="#pingModal" onclick="fz(${article.id }, ${items.replyUid })">
+                <span class="glyphicon glyphicon-edit"> *</span>
               </button>
-              <button type="button" class="btn btn-default bodernone">
+              <button id="paid${items.id }" type="button" class="btn btn-default bodernone" onclick="pzan(${items.id })">
                 <c:if test="${items.iszan == 1 }">
-                  <span class="glyphicon glyphicon-heart"> 0</span>
+                  <span style="color: red;" class="glyphicon glyphicon-heart"> ${items.replyPid }</span>
                 </c:if>
                 <c:if test="${items.iszan != 1 }">
-                  <span class="glyphicon glyphicon-heart-empty"> 0</span>
+                  <span class="glyphicon glyphicon-heart-empty"> ${items.replyPid }</span>
                 </c:if>
               </button>
             </div>
@@ -292,7 +296,7 @@
         </div>
         <!-- 回复区域结束 -->
         </c:forEach>
-
+        </div><!-- 评论最外层 用于追加评论 -->
       </div>
     </div>
   </div>
@@ -324,8 +328,112 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal -->
     </div>
+    <!-- 登录模态框（Modal） -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="background-image: url('xingchen.jpg');background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
+            <button type="button" class="close" data-dismiss="modal"
+                    aria-hidden="true">×
+            </button>
+            <h1 class="text-center" id="loginModalLabel" style="color: white">
+              登录
+            </h1>
+          </div>
+          <div class="modal-body">
+            <form class="form-group" action="<%=basePath%>user/locationsign" id="signin-form_id" method="post">
+              <div class="form-group">
+                <label>用户名</label>
+                <input class="form-control" type="text" name="username" placeholder="请输入用户名">
+              </div>
+              <div class="form-group">
+                <label>密码</label>
+                <input class="form-control" type="password" name="password" placeholder="请输入密码">
+              </div>
+              <div class="text-right">
+                <button class="btn btn-primary" type="submit" onclick="signinsubform()">登录</button>
+                <button class="btn btn-danger" data-dismiss="modal">取消</button>
+              </div>
+              <a href="" data-toggle="modal" data-dismiss="modal" data-target="#registerModal">还没有账号？点我注册</a>  |
+              <a href="" data-toggle="modal" data-dismiss="modal" data-target="#passwardModal">忘记密码</a>
+            </form>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
   <script type="text/javascript">
+
+  /**
+    * 文章赞
+    */
+      function zan(id){
+          var zanid = "zanid";
+          $.ajax({
+              cache:true,
+              type:"POST",
+              url:"<%=basePath%>/article/zan",
+              data:{id: id},
+              async:false,
+              error:function(request){
+                  alert("Connection error");
+              },
+              success:function(data){
+                  var jsonObj=eval("("+data+")");
+                  if(jsonObj.num == 10000000){
+                      alert("您已点过赞了！");
+                  }else if(jsonObj.num == 20000000){
+                      alert("请您先登录再点赞！");
+                  }else{
+                      document.getElementById(zanid).innerHTML = "<span style=\"color: red;\" class=\"glyphicon glyphicon-heart\"> "+jsonObj.num+"</span>";
+                      alert("点赞成功！");
+                  }
+              }
+          });
+      }
+
+    /**
+     * 评论赞
+     */
+      function pzan(id){
+          var paid = "paid"+id;
+          $.ajax({
+              cache:true,
+              type:"POST",
+              url:"<%=basePath%>/article/zans",
+              data:{id: id},
+              async:false,
+              error:function(request){
+                  alert("Connection error");
+              },
+              success:function(data){
+                  var jsonObj=eval("("+data+")");
+                  if(jsonObj.num == 10000000){
+                      alert("您已点过赞了！");
+                  }else if(jsonObj.num == 20000000){
+                      alert("请您先登录再点赞！");
+                  }else{
+                      document.getElementById(paid).innerHTML = "<span  style=\"color: red;\" class=\"glyphicon glyphicon-heart\"> "+jsonObj.num+"</span>";
+                      alert("点赞成功！");
+                  }
+              }
+          });
+      }
+
+      /**
+       * 登录
+       */
+      function signinsubform() {
+          if ($("input[name='username']").val().length == 0) {
+              alert("请输入用户名。");
+              return;
+          }
+          if ($("input[name='password']").val().length == 0) {
+              alert("请输入密码。");
+              return;
+          }
+          $("#signin-form_id").submit();
+      }
 
     /**
      * 异步提交评论
@@ -355,12 +463,11 @@
                       window.location.href="<%=basePath%>index";
                   }else if(jsonObj.success == 1){
                       var comment = "";
-                      comment += "<div id='pl"+jsonObj.footprintReply.replyId+"'><div class='login-form2' id='loginform' style='width: 99%; border: solid 2px;color: white; margin-top: 1%;'>";
-                      comment += "<div class='user-name common-div' style='padding: 5px;display:block;word-break: break-all;word-wrap: break-word;'><div style='margin-bottom: 3px; margin-top: 3px;' onclick='showsomebodyindex("+jsonObj.footprintReply.replyUserId+")'>";
-                      comment += "<img src='pic/slt"+jsonObj.footprintReply.picurl+"' style='width: 50px; height: 50px; border-radius: 50%;'></div><div>";
-                      comment += "<a style='color: blue;' href='javascript:showsomebodyindex("+jsonObj.footprintReply.replyUserId+")'>"+jsonObj.footprintReply.replyUserName+"</a>&nbsp;&nbsp;回复了&nbsp;&nbsp;<a style='color: blue;' href='javascript:showsomebodyindex("+jsonObj.footprintReply.breplyUserId+")'>"+jsonObj.footprintReply.breplyUserName+"</a>:&nbsp;&nbsp;";
-                      comment += jsonObj.footprintReply.replyContent+"</div><br> 回复时间：";
-                      var t = jsonObj.footprintReply.replyTime.substring(0,19);
+                      comment += "<div class='panel panel-default' id='deleteid"+jsonObj.articleReply.id+"'><div class='panel-body'><table><tr style='height: 10px;'><td rowspan='2' width='30px;'><img src='pic/"+jsonObj.articleReply.replyImg+"' class='cxhftouxiang'></td></tr><tr><td style='font-size: 12px;'>&nbsp;&nbsp;&nbsp;&nbsp;";
+                      comment += "<a href=''>"+jsonObj.articleReply.replyUname+"</a><label style='color:#aaaaaa;'>回复了</label><a href=''>"+jsonObj.articleReply.breplyUname+"</a></td><button type='button' class='btn btn-default cxguanzhu' onclick='deletearticlepl("+jsonObj.articleReply.id+", "+jsonObj.articleReply.articleId+")'>删除</button></tr></table><br>";
+                      comment += "<div class='cxtext'>"+jsonObj.articleReply.replyComment+"</div><br><HR width='100%' color=#987cb9 SIZE=5 /><div style='margin-top: -5px; font-size: 12px; color: #aaaaaa;'>回复时间：";
+
+                      var t = jsonObj.articleReply.replyTime.substring(0,19);
                       t = t.replace('-', '年');
                       t = t.replace('-', '月');
                       var t2 = t;
@@ -368,23 +475,21 @@
                       t = t.substring(0,10);
                       t = t+"日"+t2;
 
-                      var fid = $("#fid").val();
-                      var userId = $("#userId").val();
-
-                      comment += t+"&nbsp;&nbsp;&nbsp;&nbsp;</div><div style='margin-top: -6%; float: right; font-size: 15'>";
-                      if(jsonObj.footprintReply.replyUserId == userId || userId == 4){
-                          comment += "<a href='javascript:deletefoot("+jsonObj.footprintReply.replyId+")' style='margin-right: 5px; color: white;'><img src='image/sc.png' style='height: 20px;'/>&nbsp;&nbsp;</a>";
-                      }
-                      comment += "&nbsp;&nbsp;<a  href='' data-toggle='modal' data-target='#pingModal' style='margin-right: 5px; color: white;' onclick='fz("+fid+", "+jsonObj.footprintReply.replyUserId+")'><img src='image/pl.png' style='height: 20px;'/>&nbsp;&nbsp;</a>";
-                      comment += "&nbsp;&nbsp;<a id='paid"+jsonObj.footprintReply.replyId+"' style='margin-right: 5px; color: white;' href='javascript:pzan("+jsonObj.footprintReply.replyId+")'><img src='image/z.png' style='height: 20px;'/>&nbsp;&nbsp;"+jsonObj.footprintReply.replyParentId+"</a></div></div></div>";
+                      comment += t+"</div><div class='btn-group' style='float: right; margin-right: -10px; margin-top: -25px;'><button type='button' class='btn btn-default bodernone'><span class='glyphicon glyphicon-edit' data-toggle='modal' data-target='#pingModal' onclick='fz("+jsonObj.articleReply.articleId+", "+jsonObj.articleReply.replyUid+")'> *</span></button><button id='paid"+jsonObj.articleReply.id+"' type='button' class='btn btn-default bodernone' onclick='pzan("+jsonObj.articleReply.id+")'>";
+                      comment += "<c:if test='${jsonObj.articleReply.iszan == 1 }'><span style='color: red;' class='glyphicon glyphicon-heart'> "+jsonObj.articleReply.replyPid+"</span></c:if><c:if test='${jsonObj.articleReply.iszan != 1 }'><span class='glyphicon glyphicon-heart-empty'> "+jsonObj.articleReply.replyPid+"</span></c:if></button></div></div></div>";
 
                       $("#plzj").append(comment);
-
                       alert("回复成功！");
                   }
               }
           });
       }
+
+
+
+
+
+
 
      /**
       * 评论模态框附值
@@ -412,15 +517,24 @@
       }
 
       /**
-       * 删除
+       * 删除文章
        */
       function deletearticle(id){
           if(confirm("真的要删除这条分享吗?")) {
+              window.location.href="<%=basePath%>article/deletearticle?id="+id;
+          }
+      }
+
+      /**
+       * 删除评论
+       */
+      function deletearticlepl(id, articleId){
+          if(confirm("真的要删除这条评论吗?")) {
               $.ajax({
                   cache:true,
                   type:"POST",
-                  url:"<%=basePath%>personalcenter/deletearticle",
-                  data:{id: id},
+                  url:"<%=basePath%>article/deletearticlepl",
+                  data:{id: id, articleId: articleId},
                   async:false,
                   error:function(request){
                       alert("删除失败！");
@@ -428,7 +542,7 @@
                   success:function(data){
                       var jsonObj=eval("("+data+")");
                       if(jsonObj.flag == 1 ){
-                          $("#article"+id).hide();
+                          $("#deleteid"+id).hide();
                           alert("删除成功！");
                       }else if(jsonObj.flag == 2){
                           alert("删除失败！");

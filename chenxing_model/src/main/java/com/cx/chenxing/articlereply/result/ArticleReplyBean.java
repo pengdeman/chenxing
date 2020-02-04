@@ -1,9 +1,3 @@
-/*
- * Powered By [meinong]
- * Web Site: http://www.meinong.cn
- * Since 2015 - 2018
- */
-
 package com.cx.chenxing.articlereply.result;
 
 import com.cx.chenxing.mybatisutils.PageCondition;
@@ -18,16 +12,43 @@ public class ArticleReplyBean extends PageCondition {
 	private String replyComment;
 	private Long replyPid;
 	private Long breplyUid;
-	//用户表
-	private String userName;
-	private String img;
-	public String getImg() {
-		return img;
+	private String replyUname;
+	private String breplyUname;
+	private String replyImg;
+	private String breplyImg;
+
+	public String getReplyImg() {
+		return replyImg;
 	}
 
-	public void setImg(String img) {
-		this.img = img;
+	public void setReplyImg(String replyImg) {
+		this.replyImg = replyImg;
 	}
+
+	public String getBreplyImg() {
+		return breplyImg;
+	}
+
+	public void setBreplyImg(String breplyImg) {
+		this.breplyImg = breplyImg;
+	}
+
+	public String getReplyUname() {
+		return replyUname;
+	}
+
+	public void setReplyUname(String replyUname) {
+		this.replyUname = replyUname;
+	}
+
+	public String getBreplyUname() {
+		return breplyUname;
+	}
+
+	public void setBreplyUname(String breplyUname) {
+		this.breplyUname = breplyUname;
+	}
+
 	private String iszan;//是否已赞
 
 	public String getIszan() {
@@ -38,12 +59,6 @@ public class ArticleReplyBean extends PageCondition {
 		this.iszan = iszan;
 	}
 
-	public void setUserName(String value) {
-		this.userName = value;
-	}
-	public String getUserName() {
-		return this.userName;
-	}
 		public void setId(Long value) {
 			this.id = value;
 		}	

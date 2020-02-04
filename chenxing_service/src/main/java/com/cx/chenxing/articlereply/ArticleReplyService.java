@@ -27,4 +27,6 @@ public interface ArticleReplyService {
     public int delete(long id);
 
     public List<ArticleReplyBean> queryreply(ArticleReplyQuery articleReplyQuery);
+
+    void deleteByArticleId(long parseLong);
 }

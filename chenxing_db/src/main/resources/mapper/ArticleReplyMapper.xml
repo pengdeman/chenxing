@@ -27,6 +27,9 @@
             where 
             id = #{id} 
         </delete>
+        <delete id="deleteByArticleId" parameterType="java.lang.Long">
+            delete from article_reply where article_id = #{id};
+        </delete>
         <insert id="insert" parameterType="com.cx.chenxing.articlereply.entity.ArticleReply"
                 useGeneratedKeys="true" keyProperty="id">
                 <![CDATA[
@@ -189,16 +192,13 @@
         ar.reply_time as replyTime,
         ar.reply_comment as replyComment,
         ar.reply_pid as replyPid,
-        ar.breply_uid as breplyUid,
-        u.user_name as userName,
-        u.img as img
+        ar.breply_uid as breplyUid
         from article_reply ar
-        LEFT JOIN user u ON u.id = ar.reply_uid
         WHERE
         <if test="@org.apache.commons.lang.StringUtils@isNotEmpty(articleId)">
             ar.article_id = #{articleId}
         </if>
         ORDER BY
-	      ar.reply_time DESC;
+	      ar.reply_time ASC;
     </select>
 </mapper>

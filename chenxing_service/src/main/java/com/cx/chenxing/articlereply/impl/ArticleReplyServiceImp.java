@@ -19,6 +19,7 @@ public class ArticleReplyServiceImp implements ArticleReplyService {
     public int insert(ArticleReplyBean articleReplyBean) {
         ArticleReply articleReply = ModelUtil.copyObject(articleReplyBean, ArticleReply.class);
         int result = articleReplyManager.insert(articleReply);
+        articleReplyBean.setId(articleReply.getId());
         return result;
     }
 
@@ -45,6 +46,11 @@ public class ArticleReplyServiceImp implements ArticleReplyService {
     @Override
     public List<ArticleReplyBean> queryreply(ArticleReplyQuery articleReplyQuery) {
         return articleReplyManager.queryreply(articleReplyQuery);
+    }
+
+    @Override
+    public void deleteByArticleId(long id) {
+        articleReplyManager.deleteByArticleId(id);
     }
 
     public ArticleReplyBean selectByPrimaryKey(long id) {
