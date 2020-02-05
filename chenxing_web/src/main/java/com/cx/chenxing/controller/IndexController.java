@@ -60,7 +60,9 @@ public class IndexController {
                 }
             }
         });
-        articleService.updateYdNum(articleIds);
+        if(articleIds.size() > 0){
+            articleService.updateYdNum(articleIds);
+        }
         //更新阅读数------end
         model.addAttribute("articleList", articleList);
         model.addAttribute("messge", message);
