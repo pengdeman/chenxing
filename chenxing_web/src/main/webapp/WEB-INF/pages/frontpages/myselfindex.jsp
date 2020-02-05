@@ -87,7 +87,7 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li><a href="<%=basePath%>index">首页</a></li>
+          <li><a href="<%=basePath%>">首页</a></li>
           <c:if test="${user == null}">
             <li><a href="javascript:alert('登录后才可查看！')">个人中心</a></li>
             <li><a href="javascript:alert('登录后才可查看！')">留言板</a></li>
