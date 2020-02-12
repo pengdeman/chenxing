@@ -22,11 +22,11 @@
       <scope>test</scope>
     </dependency>
     
-    <dependency>
-		<groupId>com.cx</groupId>
-		<artifactId>chenxing_common</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</dependency>
+    <!--<dependency>-->
+		<!--<groupId>com.cx</groupId>-->
+		<!--<artifactId>chenxing_common</artifactId>-->
+		<!--<version>0.0.1-SNAPSHOT</version>-->
+	<!--</dependency>-->
 	
 	<dependency>
 		<groupId>com.cx</groupId>
@@ -34,11 +34,11 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
 	
-	<dependency>
-		<groupId>com.cx</groupId>
-		<artifactId>chenxing_model</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</dependency>
+	<!--<dependency>-->
+		<!--<groupId>com.cx</groupId>-->
+		<!--<artifactId>chenxing_model</artifactId>-->
+		<!--<version>0.0.1-SNAPSHOT</version>-->
+	<!--</dependency>-->
 	
   </dependencies>
 </project>
