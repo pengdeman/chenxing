@@ -44,25 +44,34 @@
       <artifactId>metadata-extractor</artifactId>
       <version>2.4.0-beta-1</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>2.5.1</version>
+    </dependency>
   </dependencies>
 
-  <!--<build>-->
-    <!--<plugins>-->
-      <!--<plugin>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-      <!--</plugin>-->
-      <!--<plugin>-->
-        <!--<artifactId>maven-compiler-plugin</artifactId>-->
-        <!--<configuration>-->
-          <!--<encoding>UTF-8</encoding>-->
-          <!--<compilerArguments>-->
-            <!--<verbose />-->
-            <!--<bootclasspath>${java.home}\lib\rt.jar${path.separator}${java.home}\lib\jce.jar${path.separator}</bootclasspath>-->
-          <!--</compilerArguments>-->
-        <!--</configuration>-->
-      <!--</plugin>-->
-    <!--</plugins>-->
-  <!--</build>-->
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>UTF-8</encoding>
+          <optimize>true</optimize>
+          <debug>true</debug>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>false</showWarnings>
+          <compilerArguments>
+            <verbose />
+            <bootclasspath>${java.home}/lib/rt.jar:${java.home}/lib/jce.jar</bootclasspath>
+          </compilerArguments>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

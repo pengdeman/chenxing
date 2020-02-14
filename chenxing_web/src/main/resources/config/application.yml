@@ -13,6 +13,22 @@ spring:
     username: root
     password: pdm920521
     driver-class-name: com.mysql.jdbc.Driver
+    connectionProperties: useUnicode=true;autoReconnect=true;failOverReadOnly=false;characterEncoding=utf8;zeroDateTimeBehavior=convertToNull;allowMultiQueries=true
+    initialSize: 50
+    maxActive: 300
+    minIdle: 50
+    maxWait: 1000
+    defaultAutoCommit: true
+    timeBetweenEvictionRunsMillis: 600000
+    numTestsPerEvictionRun: 3
+    minEvictableIdleTimeMillis: 1800000
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    validationQuery: select 1
+    removeAbandoned: true
+    removeAbandonedTimeout: 180
+    logAbandoned: true
   mvc:
     view:
       prefix: /WEB-INF/pages/
