@@ -9,7 +9,7 @@
   <url>http://maven.apache.org</url>
   
   <!-- 项目说明：这里作为聚合工程的父工程 -->
-  <groupId>com.cx</groupId>
+  <groupId>com.cx.chenxing</groupId>
   <artifactId>chenxing</artifactId>
   <version>0.0.1-SNAPSHOT</version>
  
