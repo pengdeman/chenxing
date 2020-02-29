@@ -1,26 +1,25 @@
 package com.cx.chenxing.controller;
 
-import com.cx.chenxing.article.ArticleService;
-import com.cx.chenxing.article.result.ArticleBean;
-import com.cx.chenxing.articlereply.ArticleReplyService;
-import com.cx.chenxing.articlereply.param.ArticleReplyQuery;
-import com.cx.chenxing.articlereply.result.ArticleReplyBean;
-import com.cx.chenxing.mybatisutils.Page;
-import com.cx.chenxing.user.UserService;
-import com.cx.chenxing.user.result.UserBean;
-import com.cx.chenxing.userzan.UserZanService;
-import com.cx.chenxing.userzan.param.UserZanQuery;
-import com.cx.chenxing.userzan.result.UserZanBean;
+import com.cx.chenxing.model.article.result.ArticleBean;
+import com.cx.chenxing.model.articlereply.param.ArticleReplyQuery;
+import com.cx.chenxing.model.articlereply.result.ArticleReplyBean;
+import com.cx.chenxing.model.user.result.UserBean;
+import com.cx.chenxing.model.userzan.param.UserZanQuery;
+import com.cx.chenxing.model.userzan.result.UserZanBean;
+import com.cx.chenxing.service.article.ArticleService;
+import com.cx.chenxing.service.articlereply.ArticleReplyService;
+import com.cx.chenxing.service.user.UserService;
+import com.cx.chenxing.service.userzan.UserZanService;
 import com.cx.chenxing.utils.GetSysUrlUtil;
 import com.cx.chenxing.utils.JsonUtil;
 import com.cx.chenxing.utils.MailUtil;
 import com.cx.chenxing.utils.NormalUtils;
+import com.cx.chenxing.utils.mybatisutils.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

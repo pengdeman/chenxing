@@ -10,7 +10,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@MapperScan("com.cx.chenxing.*.dao")
+@MapperScan("com.cx.chenxing.db.*.dao")
 public class ChenXingWebApplication extends SpringBootServletInitializer {
 
 	@Override

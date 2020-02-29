@@ -1,12 +1,10 @@
 package com.cx.chenxing.controller;
 
-import com.cx.chenxing.article.ArticleService;
-import com.cx.chenxing.article.param.ArticleQuery;
-import com.cx.chenxing.article.result.ArticleBean;
-import com.cx.chenxing.user.UserService;
-import com.cx.chenxing.user.result.UserBean;
-import com.cx.chenxing.utils.JsonUtil;
-import com.cx.chenxing.utils.MD5Util;
+import com.cx.chenxing.model.article.param.ArticleQuery;
+import com.cx.chenxing.model.article.result.ArticleBean;
+import com.cx.chenxing.model.user.result.UserBean;
+import com.cx.chenxing.service.article.ArticleService;
+import com.cx.chenxing.service.user.UserService;
 import com.cx.chenxing.utils.NormalUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,17 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 个人中心相关

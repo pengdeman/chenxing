@@ -1,14 +1,14 @@
 package com.cx.chenxing.controller;
 
-import com.cx.chenxing.article.ArticleService;
-import com.cx.chenxing.article.param.ArticleQuery;
-import com.cx.chenxing.article.result.ArticleBean;
-import com.cx.chenxing.mybatisutils.Page;
-import com.cx.chenxing.user.UserService;
-import com.cx.chenxing.user.result.UserBean;
-import com.cx.chenxing.userzan.UserZanService;
-import com.cx.chenxing.userzan.param.UserZanQuery;
-import com.cx.chenxing.userzan.result.UserZanBean;
+import com.cx.chenxing.model.article.param.ArticleQuery;
+import com.cx.chenxing.model.article.result.ArticleBean;
+import com.cx.chenxing.model.user.result.UserBean;
+import com.cx.chenxing.model.userzan.param.UserZanQuery;
+import com.cx.chenxing.model.userzan.result.UserZanBean;
+import com.cx.chenxing.service.article.ArticleService;
+import com.cx.chenxing.service.user.UserService;
+import com.cx.chenxing.service.userzan.UserZanService;
+import com.cx.chenxing.utils.mybatisutils.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
