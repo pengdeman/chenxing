@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.comment.dao.IVisitorDao">
+  <resultMap id="BaseResultMap" type="com.cn.comment.pojo.Visitor" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="visitor_id" property="visitorId" jdbcType="INTEGER" />
+    <result column="visitor_name" property="visitorName" jdbcType="VARCHAR" />
+    <result column="bvisitor_id" property="bvisitorId" jdbcType="INTEGER" />
+    <result column="bvisitor_name" property="bvisitorName" jdbcType="VARCHAR" />
+    <result column="visitor_adr" property="visitorAdr" jdbcType="VARCHAR" />
+    <result column="visitor_time" property="visitorTime" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, visitor_id, visitor_name, bvisitor_id, bvisitor_name, visitor_adr, visitor_time
+  </sql>
+  
+  <select id="queryListNumByBvisitorId" resultMap="BaseResultMap" parameterType="com.cn.comment.pojo.Visitor" >
+    select 
+    <include refid="Base_Column_List" />
+    from visitor
+    where bvisitor_id = #{bvisitorId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryListByBvisitorId" resultMap="BaseResultMap" parameterType="com.cn.comment.pojo.Visitor" >
+    select 
+    <include refid="Base_Column_List" />
+    from visitor
+    where bvisitor_id = #{bvisitorId,jdbcType=INTEGER} GROUP BY visitor_id order by visitor_time desc
+  </select> 
+  
+  <insert id="insert" parameterType="com.cn.comment.pojo.Visitor" >
+    insert into visitor (id, visitor_id, visitor_name, bvisitor_id, bvisitor_name, visitor_adr, visitor_time)
+    values (#{id,jdbcType=INTEGER},#{visitorId,jdbcType=INTEGER}, #{visitorName,jdbcType=VARCHAR}, #{bvisitorId,jdbcType=INTEGER}, #{bvisitorName,jdbcType=VARCHAR}, 
+    #{visitorAdr,jdbcType=VARCHAR}, #{visitorTime,jdbcType=VARCHAR})
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from visitor
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from visitor
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+</mapper>

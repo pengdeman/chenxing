@@ -33,6 +33,8 @@ spring:
     view:
       prefix: /WEB-INF/pages/
       suffix: .jsp
+  resources:
+    static-locations: classpath:static/,file:/upload/
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
   type-aliases-package: com.cx.chenxing.db.*.dao

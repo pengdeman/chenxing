@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.comment.dao.IUzanDao">
+  <resultMap id="BaseResultMap" type="com.cn.comment.pojo.Uzan" >
+    <id column="zan_id" property="zanId" jdbcType="INTEGER" />
+    <result column="bzan_uid" property="bzanUid" jdbcType="INTEGER" />
+    <result column="zan_uid" property="zanUid" jdbcType="INTEGER" />
+    <result column="zan_time" property="zanTime" jdbcType="VARCHAR" />
+    <result column="footprint_id" property="footprintId" jdbcType="INTEGER" />
+    <result column="footprint_rid" property="footprintRid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    zan_id, bzan_uid, zan_uid, zan_time, footprint_id, footprint_rid
+  </sql>
+  
+  <insert id="insert" parameterType="com.cn.comment.pojo.Uzan" >
+    insert into uzan 
+    (
+    zan_id, 
+    bzan_uid, 
+    zan_uid, 
+    zan_time, 
+    footprint_id, 
+    footprint_rid
+    )
+    values 
+    (
+    #{zanId,jdbcType=INTEGER},
+    #{bzanUid,jdbcType=INTEGER},
+    #{zanUid,jdbcType=INTEGER}, 
+    #{zanTime,jdbcType=VARCHAR}, 
+    #{footprintId,jdbcType=INTEGER},
+    #{footprintRid,jdbcType=INTEGER}
+    )
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from uzan
+    where zan_id = #{zanId,jdbcType=INTEGER}
+  </delete>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from uzan 
+    where zan_id = #{zanId,jdbcType=INTEGER}
+  </select>
+
+ <select id="queryzanlist" resultMap="BaseResultMap" parameterType="com.cn.comment.pojo.Uzan">
+    select 
+    <include refid="Base_Column_List" />
+    from uzan 
+    where 1=1 
+    <if test="bzanUid != null" >
+        and bzan_uid = #{bzanUid,jdbcType=INTEGER}
+    </if>
+    <if test="zanUid != null" >
+        and zan_uid = #{zanUid,jdbcType=INTEGER}
+    </if>
+    <if test="footprintId != null" >
+        and footprint_id = #{footprintId,jdbcType=INTEGER}
+    </if>
+    <if test="footprintRid != null" >
+        and footprint_rid = #{footprintRid,jdbcType=INTEGER} 
+    </if>
+    ORDER BY zan_time desc
+  </select>
+  
+</mapper>

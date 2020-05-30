@@ -1,4 +1,4 @@
-package com.cx.chenxing.utils;
+package com.cx.chenxing.utils.zj;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,11 +26,14 @@ public class MailUtil {
     private MimeMessage message;
     private Session session;
     private Transport transport;
+
     private String mailHost;
     private String sender_username;
     private String sender_password;
+
     private Properties properties = new Properties();
 
+    
     /**
      * 构造方法 初始化发送方信息.
      * @param smtpHost 发送方host地址
@@ -186,23 +189,23 @@ public class MailUtil {
         }
     }
 
-//    public static void main(String[] args) {
-//        String mailHost = "smtp.163.com";//
-//        String sender_username = "penderman@163.com";
-//        String sender_password = "p920521";
-////        String[] files = {"D:\\images\\email.png", "D:\\images\\abc.jpg" };
-//        String[] toUser = { "872422345@qq.com"/*"389318534@qq.com" ,*/};
-////        String[] toCopy = { "1129014743@qq.com","231186321@qq.com","18910240823@qq.com"};
-//        // 正文附件
-////        Map<String, String> map = new HashMap<String, String>();
-////        map.put("a00000001", "D:\\images\\email.png");
-//        MailUtil se = new MailUtil(mailHost, sender_username, sender_password, false);
-////带附件发送
-////        se.doSendHtmlEmail(
-////                "邮件主题",
-////                "<div style='background-color:red;'>测试邮件</div><img alt='' src='cid:a00000001'></img>",
-////                toUser, files, toCopy, map);//
-//        se.doSendHtmlEmail("测试邮件", "<div style='background-color:red;'>测试邮件？？？111</div>", toUser, null);
-//    }
+    public static void main(String[] args) {
+        String mailHost = "smtp.163.com";//
+        String sender_username = "penderman@163.com";
+        String sender_password = "p920521";
+//        String[] files = {"D:\\images\\email.png", "D:\\images\\abc.jpg" };
+        String[] toUser = { "872422345@qq.com"/*"389318534@qq.com" ,*/};
+//        String[] toCopy = { "1129014743@qq.com","231186321@qq.com","18910240823@qq.com"};
+        // 正文附件
+//        Map<String, String> map = new HashMap<String, String>();
+//        map.put("a00000001", "D:\\images\\email.png");
+        MailUtil se = new MailUtil(mailHost, sender_username, sender_password, false);
+//带附件发送
+//        se.doSendHtmlEmail(
+//                "邮件主题",
+//                "<div style='background-color:red;'>测试邮件</div><img alt='' src='cid:a00000001'></img>",
+//                toUser, files, toCopy, map);//
+        se.doSendHtmlEmail("测试邮件", "<div style='background-color:red;'>测试邮件？？？111</div>", toUser, null);
+    }
 
 }

@@ -10,10 +10,7 @@ import com.cx.chenxing.service.article.ArticleService;
 import com.cx.chenxing.service.articlereply.ArticleReplyService;
 import com.cx.chenxing.service.user.UserService;
 import com.cx.chenxing.service.userzan.UserZanService;
-import com.cx.chenxing.utils.GetSysUrlUtil;
-import com.cx.chenxing.utils.JsonUtil;
-import com.cx.chenxing.utils.MailUtil;
-import com.cx.chenxing.utils.NormalUtils;
+import com.cx.chenxing.utils.*;
 import com.cx.chenxing.utils.mybatisutils.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,19 +78,21 @@ public class ArticleController {
         }
         String[] types = {"JPG", "PNG", "JPEG", "GIF", "JEPG"};
         try {
-            String[] newfileName = NormalUtils.syqpicdownUrl(reques, "picurl",articleBean.getPicurl());
-            if (newfileName != null) {
-                //判断图片类型
-                if (!Arrays.asList(types).contains(newfileName[0].substring(newfileName[0].lastIndexOf(".")+1).toUpperCase())) {
-                    attributes.addAttribute("messge", "照片格式只支持png、jpg、jpeg、gif！");
-                    return "redirect:/";
-                }
-                articleBean.setPicurl(newfileName[1]);
-                //articleBean.setPictruename(newfileName[0]);
-            } else {
-                attributes.addAttribute("messge", "发布信息失败，请上传您的照片！");
-                return "redirect:/";
-            }
+            String fileName = PicUploadUtil.uploadPic(reques);
+            articleBean.setPicurl(fileName);
+//            String[] newfileName = NormalUtils.syqpicdownUrl(reques, "picurl",articleBean.getPicurl());
+//            if (newfileName != null) {
+//                //判断图片类型
+//                if (!Arrays.asList(types).contains(newfileName[0].substring(newfileName[0].lastIndexOf(".")+1).toUpperCase())) {
+//                    attributes.addAttribute("messge", "照片格式只支持png、jpg、jpeg、gif！");
+//                    return "redirect:/";
+//                }
+//                articleBean.setPicurl(newfileName[1]);
+//                //articleBean.setPictruename(newfileName[0]);
+//            } else {
+//                attributes.addAttribute("messge", "发布信息失败，请上传您的照片！");
+//                return "redirect:/";
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }

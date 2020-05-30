@@ -19,7 +19,27 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   
-  <dependencies>  
+  <dependencies>
+	  <dependency>
+		  <groupId>dom4j</groupId>
+		  <artifactId>dom4j</artifactId>
+		  <version>1.6</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>javax.servlet</groupId>
+		  <artifactId>javax.servlet-api</artifactId>
+		  <version>3.1.0</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>commons-lang</groupId>
+		  <artifactId>commons-lang</artifactId>
+		  <version>2.4</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>net.sf.json-lib</groupId>
+		  <artifactId>json-lib</artifactId>
+		  <version>0.8</version>
+	  </dependency>
   	<!--WEB支持-->
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
@@ -113,28 +133,28 @@
 		</resources>
 		<plugins>
 			<!--  springboot提供的项目编译打包插件  -->
-			<!--<plugin>-->
-				<!--<groupId>org.springframework.boot</groupId>-->
-				<!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-				<!--<version>1.4.2.RELEASE</version>-->
-			<!--</plugin>-->
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<encoding>UTF-8</encoding>
-					<optimize>true</optimize>
-					<debug>true</debug>
-					<showDeprecation>true</showDeprecation>
-					<showWarnings>false</showWarnings>
-					<compilerArguments>
-						<verbose />
-						<bootclasspath>${java.home}/lib/rt.jar:${java.home}/lib/jce.jar</bootclasspath>
-					</compilerArguments>
-				</configuration>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>1.4.2.RELEASE</version>
 			</plugin>
+			<!--<plugin>-->
+				<!--<artifactId>maven-compiler-plugin</artifactId>-->
+				<!--<version>2.5.1</version>-->
+				<!--<configuration>-->
+					<!--<source>1.8</source>-->
+					<!--<target>1.8</target>-->
+					<!--<encoding>UTF-8</encoding>-->
+					<!--<optimize>true</optimize>-->
+					<!--<debug>true</debug>-->
+					<!--<showDeprecation>true</showDeprecation>-->
+					<!--<showWarnings>false</showWarnings>-->
+					<!--<compilerArguments>-->
+						<!--<verbose />-->
+						<!--<bootclasspath>${java.home}/lib/rt.jar:${java.home}/lib/jce.jar</bootclasspath>-->
+					<!--</compilerArguments>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
 		</plugins>
 	</build>
   

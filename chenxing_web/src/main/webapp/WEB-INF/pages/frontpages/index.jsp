@@ -119,7 +119,7 @@
           <div class="fakeimg" style="background-image: url('wxr.png');">
         </c:if>
         <c:if test="${user != null }">
-          <div class="fakeimg" style="background-image: url('pic/${user.img }');">
+          <div class="fakeimg" style="background-image: url('${user.img }');">
         </c:if>
         </div>
         <div class="panel panel-default">
@@ -185,13 +185,13 @@
       <div class="col-sm-8">
         <c:forEach items="${articleList}" var="item">
           <h2></h2>
-          <div class="fakeimg" style="background-image: url('pic/${item.picurl }')"></div>
+          <div class="fakeimg" style="background-image: url('${item.picurl }')"></div>
           <div class="panel panel-default">
             <div class="panel-body">
               <table class="table" frame="void">
                 <tr style="height: 20px;">
                   <td rowspan="2" width="55px;">
-                    <img src="pic/${item.img }" class="cxtouxiang">
+                    <img src="${item.img }" class="cxtouxiang">
                   </td>
                   <td>
                     <label style="margin-top: 5px;">${item.userName }</label>&nbsp;&nbsp;<label title="登录365天，皇冠等级">👑</label>

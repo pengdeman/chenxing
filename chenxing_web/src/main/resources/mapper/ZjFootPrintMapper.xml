@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.comment.dao.IFootprintDao">
+  <resultMap id="BaseResultMap" type="com.cn.comment.pojo.Footprint" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userid" property="userId" jdbcType="INTEGER" />
+    <result column="cretime" property="creTime" jdbcType="VARCHAR" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="lng" property="lng" jdbcType="VARCHAR" />
+    <result column="lat" property="lat" jdbcType="VARCHAR" />
+    <result column="crename" property="creName" jdbcType="VARCHAR" />
+    <result column="picurl" property="picurl" jdbcType="VARCHAR" />
+    <result column="pictruename" property="pictruename" jdbcType="VARCHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="readnum" property="readNum" jdbcType="INTEGER" />
+    <result column="clicknum" property="clickNum" jdbcType="INTEGER" />
+    <result column="saynum" property="sayNum" jdbcType="INTEGER" />
+    <result column="upicurl" property="upicurl" jdbcType="VARCHAR" />
+    <result column="zfnum" property="zfNum" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, userid, cretime, location, lng, lat, crename, picurl, pictruename, comment, readnum, clicknum, saynum, zfnum
+  </sql>
+  
+  <sql id="Base_Column_List_s" >
+    f.id, f.userid, f.cretime, f.location, f.lng, f.lat, f.crename, f.picurl, f.pictruename, f.comment, f.readnum, f.clicknum, f.saynum, f.zfnum, u.picurl as upicurl
+  </sql>
+
+  <insert id="insert" parameterType="com.cn.comment.pojo.Footprint" >
+    insert into footprint 
+    (id, userid, cretime, location, lng, lat, crename, picurl, pictruename, comment, readnum, clicknum, saynum, zfnum)
+    values 
+    (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{creTime,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
+     #{lng,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR}, #{creName,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR},
+     #{pictruename,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{readNum,jdbcType=INTEGER}, 
+     #{clickNum,jdbcType=INTEGER}, #{sayNum,jdbcType=INTEGER}, #{zfNum,jdbcType=INTEGER})
+  </insert>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List_s" />
+    from footprint f left join user u on u.id = f.userid
+    where f.id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="footprintList" resultMap="BaseResultMap" parameterType="com.cn.comment.pojo.Footprint">
+    select 
+    <include refid="Base_Column_List" />
+    from footprint 
+    where userid = #{userId,jdbcType=INTEGER}
+    ORDER BY creTime ASC
+  </select>
+  
+  <select id="publicfootprintList" resultMap="BaseResultMap" parameterType="com.cn.comment.pojo.Footprint">
+    select 
+    <include refid="Base_Column_List" />
+    from footprint 
+    where userid = #{userId,jdbcType=INTEGER} and readnum = 1
+    ORDER BY creTime ASC
+  </select>
+  
+  <select id="fList" resultMap="BaseResultMap" parameterType="com.cn.comment.pojo.Footprint">
+    select 
+    <include refid="Base_Column_List_s" />
+    from footprint f left join user u on u.id = f.userid
+    where f.readnum = 1 
+    ORDER BY f.creTime DESC limit #{beginNum}, #{endNum}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from footprint
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <update id="updateSelective" parameterType="com.cn.comment.pojo.Footprint" >
+    update footprint
+    <set >
+      <if test="clickNum != null" >
+        clicknum = #{clickNum,jdbcType=INTEGER},
+      </if>
+      <if test="sayNum != null" >
+        saynum = #{sayNum,jdbcType=INTEGER},
+      </if>
+      <if test="zfNum != null" >
+        zfnum = #{zfNum,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

@@ -1,4 +1,7 @@
-package com.cx.chenxing.utils;
+/**
+ * 
+ */
+package com.cx.chenxing.utils.zj;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
@@ -350,12 +353,39 @@ public class NormalUtils {
 		}
 		return bean;
 	}
+	/*
+	public static String getIndexLink(int seed){
+		switch (seed)
+		{
+		case 1:
+			System.out.println("../jjfz/jjfz.jsp");
+			return "../jjfz/jjfz.jsp";
+		case 2:
+			System.out.println("../shhx/shhx-cxsrqk.html");
+			return "../shhx/shhx-cxsrqk.html";
+		case 3:
+			System.out.println("../shzl/shzl-jmszzk.html");
+			return "../shzl/shzl-jmszzk.html";
+		case 4:
+			System.out.println("../mzfz/mzfz-ldbgs.html");
+			return "../mzfz/mzfz-ldbgs.html";
+		case 5:
+			System.out.println("../whjy/whjy-jyzxhd.html");
+			return "../whjy/whjy-jyzxhd.html";
+		case 6:
+			System.out.println("../zyhj/zyhj.jsp");
+			return "../zyhj/zyhj.jsp";
+		
+		}
+		return null;
+	}
+	*/
+	
 	
 public static String[] syqpicdownUrl(MultipartHttpServletRequest request,String name,String oldfile){
 		
 		if(oldfile!=null&&!"".equals(oldfile.trim())){//判断是否是有旧数据
 			File oldFile  = new File(request.getSession().getServletContext().getRealPath(File.separator+"pic")+File.separator+oldfile);//原来的文件
-			//File oldFile = new File("/File/pic"+File.separator+oldfile);//创建路径
 			if(oldFile.exists()){
 				oldFile.delete();//删除旧文件
 			}
@@ -365,7 +395,6 @@ public static String[] syqpicdownUrl(MultipartHttpServletRequest request,String 
 		if(multipartFile!=null&&multipartFile.getOriginalFilename()!=null&&!"".equals(multipartFile.getOriginalFilename().trim())){
 			try{
 				File outFile = new File(request.getSession().getServletContext().getRealPath(File.separator+"pic")+File.separator);//创建路径
-				//File outFile = new File("/File/pic"+File.separator);//创建路径
 				if(!outFile.exists()){
 					outFile.mkdirs();
 				}
@@ -382,7 +411,6 @@ public static String[] syqpicdownUrl(MultipartHttpServletRequest request,String 
 				String curren = System.currentTimeMillis()+"";
 				
 				String downPath = request.getSession().getServletContext().getRealPath(File.separator+"pic")+File.separator+curren+filenamehz;
-				//String downPath = "/File/pic"+File.separator+curren+filenamehz;
 				nowName[1]=System.currentTimeMillis()+filenamehz;
 				
 				OutputStream out = new FileOutputStream(downPath);
@@ -401,8 +429,7 @@ public static String[] syqpicdownUrl(MultipartHttpServletRequest request,String 
 				 * 加上缩略图
 				 */
 				String slvdownPath = request.getSession().getServletContext().getRealPath(File.separator+"pic")+File.separator+"slt"+curren+filenamehz;
-				//String slvdownPath = "/File/pic"+File.separator+"slt"+curren+filenamehz;
-				//ImageCompressUtil.saveMinPhoto(downPath, slvdownPath, 1000, 1d);
+				ImageCompressUtil.saveMinPhoto(downPath, slvdownPath, 1000, 1d);
 				
 			}catch(Exception e){
 				e.printStackTrace();

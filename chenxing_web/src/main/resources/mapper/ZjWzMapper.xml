@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.comment.dao.IWzDao">
+  <resultMap id="BaseResultMap" type="com.cn.comment.pojo.Wz" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cretime" property="creTime" jdbcType="VARCHAR" />
+    <result column="adr" property="adr" jdbcType="VARCHAR" />
+    <result column="lng" property="lng" jdbcType="VARCHAR" />
+    <result column="lat" property="lat" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, cretime, adr, lng, lat, name
+  </sql>
+  
+  <insert id="insert" parameterType="com.cn.comment.pojo.Wz" >
+    insert into wz (id, cretime, adr, lng, lat, name)
+    values (#{id,jdbcType=INTEGER}, #{creTime,jdbcType=VARCHAR}, #{adr,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="wzList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wz
+    order by cretime DESC
+  </select>
+  
+  <select id="wzListbymail" resultMap="BaseResultMap" parameterType="com.cn.comment.pojo.Wz">
+    select 
+    <include refid="Base_Column_List" />
+    from wz where name = #{name,jdbcType=VARCHAR} 
+    order by cretime DESC
+  </select>
+  
+</mapper>

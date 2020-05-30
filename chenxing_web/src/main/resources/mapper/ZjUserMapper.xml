@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.comment.dao.IUserDao">
+  <resultMap id="BaseResultMap" type="com.cn.comment.pojo.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="credate" property="creDate" jdbcType="DATE" />
+    <result column="loginip" property="loginIp" jdbcType="VARCHAR" />
+    <result column="logindate" property="loginDate" jdbcType="DATE" />
+    <result column="isactivate" property="isActivate" jdbcType="VARCHAR" />
+    <result column="pictruename" property="pictruename" jdbcType="VARCHAR" />
+    <result column="picurl" property="picurl" jdbcType="VARCHAR" />
+    <result column="loginadr" property="loginadr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_name, password, login_name, mail, age, credate, loginip, logindate, isactivate, pictruename, picurl, loginadr
+  </sql>
+  <!-- 通过用户名和密码找user findLoginUserByLoginNameAndPassword -->
+  <select id="findLoginUserByLoginNameAndPassword" resultMap="BaseResultMap" parameterType="com.cn.comment.pojo.User" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where login_name = #{loginName,jdbcType=VARCHAR} or mail = #{loginName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+  </select> 
+  
+  <select id="findName" resultMap="BaseResultMap" parameterType="com.cn.comment.pojo.User" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where (user_name = #{userName,jdbcType=VARCHAR} or mail = #{mail,jdbcType=VARCHAR}) and isactivate is not null
+  </select>  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.comment.pojo.User" >
+    insert into user (id, user_name, password, login_name, mail,
+      age, credate, loginip, logindate, isactivate, pictruename, picurl, loginadr)
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR},
+      #{age,jdbcType=INTEGER}, #{creDate,jdbcType=DATE}, #{loginIp,jdbcType=VARCHAR}, #{loginDate,jdbcType=DATE}, #{isActivate,jdbcType=VARCHAR}, #{pictruename,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, #{loginadr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.comment.pojo.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="creDate != null" >
+        credate,
+      </if>
+      <if test="loginIp != null" >
+        loginip,
+      </if>
+      <if test="loginDate != null" >
+        logindate,
+      </if>
+      <if test="isActivate != null" >
+        isactivate,
+      </if>
+      <if test="pictruename != null" >
+        pictruename,
+      </if>
+      <if test="picurl != null" >
+        picurl,
+      </if>
+      <if test="loginadr != null" >
+        loginadr
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="creDate != null" >
+        #{creDate,jdbcType=DATE},
+      </if>
+      <if test="loginIp != null" >
+        #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginDate != null" >
+        #{loginDate,jdbcType=DATE},
+      </if>
+      <if test="isActivate != null" >
+        #{isActivate,jdbcType=VARCHAR},
+      </if>
+      <if test="pictruename != null" >
+        #{pictruename,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="loginadr != null" >
+        #{loginadr,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.comment.pojo.User" >
+    update user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="creDate != null" >
+        credate = #{creDate,jdbcType=DATE},
+      </if>
+      <if test="loginIp != null" >
+        loginip = #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginDate != null" >
+        logindate = #{loginDate,jdbcType=DATE},
+      </if>
+      <if test="isActivate != null" >
+        isactivate = #{isActivate,jdbcType=VARCHAR},
+      </if>
+      <if test="pictruename != null" >
+       pictruename = #{pictruename,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+       picurl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="loginadr != null" >
+       loginadr = #{loginadr,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.comment.pojo.User" >
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      credate = #{creDate,jdbcType=DATE},
+      loginip = #{loginIp,jdbcType=VARCHAR},
+      logindate = #{loginDate,jdbcType=DATE},
+      isactivate = #{isActivate,jdbcType=VARCHAR},
+      pictruename = #{pictruename,jdbcType=VARCHAR},
+      picurl = #{picurl,jdbcType=VARCHAR},
+      loginadr = #{loginadr,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

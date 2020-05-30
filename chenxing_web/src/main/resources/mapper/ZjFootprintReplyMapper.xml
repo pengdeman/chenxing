@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.comment.dao.IFootprintReplyDao">
+  <resultMap id="BaseResultMap" type="com.cn.comment.pojo.FootprintReply" >
+	<id column="reply_id" property="replyId" jdbcType="INTEGER" />    
+	<result column="footprint_id" property="footprintId" jdbcType="INTEGER" />
+    <result column="reply_user_id" property="replyUserId" jdbcType="INTEGER" />
+    <result column="reply_time" property="replyTime" jdbcType="VARCHAR" />
+    <result column="reply_content" property="replyContent" jdbcType="VARCHAR" />
+    <result column="breply_user_id" property="breplyUserId" jdbcType="INTEGER" />
+    <result column="reply_parent_id" property="replyParentId" jdbcType="INTEGER" />
+    <result column="reply_user_name" property="replyUserName" jdbcType="VARCHAR" />
+    <result column="breply_user_name" property="breplyUserName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    a.reply_id, a.footprint_id, a.reply_user_id, a.reply_time, a.reply_content, a.breply_user_id, a.reply_parent_id, a.reply_user_name, a.breply_user_name, u.picurl
+  </sql>
+  
+  <select id="replyList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from footprintreply a
+    left join user u on u.id = a.reply_user_id
+    where a.footprint_id = #{footprintId,jdbcType=INTEGER} order by a.reply_time asc
+  </select>
+  
+  <select id="replyLists" resultMap="BaseResultMap" parameterType="com.cn.comment.pojo.FootprintReply">
+    select 
+    <include refid="Base_Column_List" />
+    from footprintreply a
+    left join user u on u.id = a.reply_user_id
+    where a.reply_parent_id = #{replyParentId,jdbcType=INTEGER} and a.footprint_id = #{footprintId,jdbcType=INTEGER}
+  </select>
+  
+  <insert id="insert" parameterType="com.cn.comment.pojo.FootprintReply" useGeneratedKeys="true" keyProperty="replyId">
+   <![CDATA[
+    insert into footprintreply (reply_id, footprint_id, reply_user_id, reply_user_name, reply_time, reply_content, breply_user_id, reply_parent_id, breply_user_name)
+    values (#{replyId,jdbcType=INTEGER}, #{footprintId,jdbcType=INTEGER}, #{replyUserId,jdbcType=INTEGER}, #{replyUserName,jdbcType=VARCHAR}, #{replyTime,jdbcType=VARCHAR}, 
+    #{replyContent,jdbcType=VARCHAR}, #{breplyUserId,jdbcType=INTEGER}, #{replyParentId,jdbcType=INTEGER}, #{breplyUserName,jdbcType=VARCHAR})
+   ]]>
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from footprintreply
+    where reply_id = #{replyId,jdbcType=INTEGER}
+  </delete>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from footprintreply a
+    left join user u on u.id = a.reply_user_id
+    where a.reply_id = #{replyId,jdbcType=INTEGER}
+  </select>
+  
+  <update id="updateSelective" parameterType="com.cn.comment.pojo.FootprintReply" >
+    update footprintreply
+    <set >
+      <if test="replyParentId != null" >
+        reply_parent_id = #{replyParentId,jdbcType=INTEGER}
+      </if>
+    </set>
+    where reply_id = #{replyId,jdbcType=INTEGER}
+  </update>
+</mapper>
